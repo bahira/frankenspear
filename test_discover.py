@@ -41,8 +41,7 @@ def test_discovered_kernels():
         assert pts, kid
         pkg = json.loads(subprocess.run(
             ["node", "-e", "const p=require('spear-kernels');console.log(JSON.stringify(p.kernels));"],
-            capture_output=True, text=True, encoding="utf-8",
-            cwd=r"C:\Users\Yuri\Documents\frankenspear").stdout.strip())
+            capture_output=True, text=True, encoding="utf-8").stdout.strip())
         jsf = pkg[kid]["precise"]["js"]
         errs = []
         for p in pts:

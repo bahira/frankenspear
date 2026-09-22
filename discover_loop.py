@@ -7,7 +7,7 @@ import numpy as np
 import intuition
 from champions_extra import EXTRA
 
-ROOT = r"C:\Users\Yuri\Documents\frankenspear"
+ROOT = str(__import__("pathlib").Path(__file__).resolve().parent)
 
 
 def _node_pkg():
