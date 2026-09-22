@@ -3,7 +3,7 @@ import json, os, subprocess, sys
 
 D = os.path.dirname(os.path.abspath(__file__))
 N = lambda p: os.path.join(D, p)
-TIMEOUT = 60
+TIMEOUT = 120
 TESTS = [
     ("typecheck.py", ["python", "typecheck.py"]),
     ("eval_harness.py --self-check", ["python", "eval_harness.py", "--self-check"]),

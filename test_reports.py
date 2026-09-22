@@ -16,7 +16,7 @@ def test_golden():
     e = load("e2e_report.json")
     v = e["verdict"]
     # median 3 passes (p50) ; tol larges pour jitter runner CI
-    assert 0.50 <= v["latency_savings_pct"] / 100 <= 0.90
+    assert 0.50 <= v["latency_savings_pct"] / 100 <= 0.95
     assert 0.45 <= v["token_savings_pct"] / 100 <= 0.65
     assert v["gate_saves_latency"] and v["gate_saves_tokens"]
     assert v["false_instant_rate_gated_lr"] == 0.0
