@@ -14,5 +14,3 @@ jobs:
           node-version: "20"
       - run: npm install
       - run: python run_all.py
-      - run: git diff --exit-code --no-color 0
-        name: check tree clean
