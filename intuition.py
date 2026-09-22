@@ -9,8 +9,10 @@ import json
 import re
 import sys
 from functools import lru_cache
+from typing import Any, Callable
 
 import numpy as np
+import numpy.typing as npt
 
 # ---------- champion kernels (closed-form, 100% ALU where possible) ----------
 
@@ -148,7 +150,7 @@ def rsi_momentum(up, down, n=14):
     return 100.0 - 100.0 / (1.0 + rs)
 
 
-QUANTUM = dict(
+QUANTUM: dict[str, Callable[..., float]] = dict(
     concurrence=concurrence_pure,
     chsh=chsh_correlation,
     grover=grover_amplitude,
@@ -158,7 +160,7 @@ QUANTUM = dict(
     rsi=rsi_momentum,
 )
 
-CHAMPIONS = dict(
+CHAMPIONS: dict[str, Callable[..., float]] = dict(
     tanh=tanh_pade, sigmoid=sigmoid_alu, silu=silu_alu,
     gelu_quintic=gelu_quintic, gelu_erf=gelu_erf, gelu_fast=gelu_fast_relu,
     silu_fast=silu_fast_relu, sigmoid_fast=sigmoid_fast,
@@ -180,11 +182,11 @@ TECH_WORDS = ("api", "http", "json", "sql", "git", "docker", "npm", "pip", "debu
 
 
 @lru_cache(maxsize=4096)
-def features_from_text(text: str) -> np.ndarray:
+def features_from_text(text: str) -> np.ndarray[Any, Any]:
     return _features_uncached(text)
 
 
-def _features_uncached(text: str) -> np.ndarray:
+def _features_uncached(text: str) -> np.ndarray[Any, Any]:
     t = (text or "").lower()
     words = t.split()
     n = max(len(words), 1)
@@ -278,12 +280,13 @@ class TinyPolicy:
 class LogisticGate:
     """Logistic gate on the 16 raw features: predicts P(trivial)."""
 
-    def __init__(self, mu, sd, w, b):
+    def __init__(self, mu: Any, sd: Any, w: Any, b: float) -> None:
         self.mu, self.sd = np.asarray(mu, np.float64), np.asarray(sd, np.float64)
         self.w, self.b = np.asarray(w, np.float64), float(b)
 
     @classmethod
-    def fit(cls, X, y_trivial, epochs=400, lr=0.5, seed=0):
+    def fit(cls, X: np.ndarray[Any, Any], y_trivial: np.ndarray[Any, Any],
+            epochs: int = 400, lr: float = 0.5, seed: int = 0) -> "LogisticGate":
         from eval_harness import fit_lr  # lazy — eval_harness imports intuition
         X = np.atleast_2d(np.asarray(X, np.float64))
         mu, sd = X.mean(0), X.std(0) + 1e-6
@@ -347,13 +350,14 @@ class IntuitionInstant:
         # quantum gate: map |2p-1| through gauss CDF fast slot
         return float(gaussian_cdf_fast(4.0 * abs(p - 0.5) - 1.0))
 
-    def route(self, text: str) -> dict:
+    def route(self, text: str) -> dict[str, Any]:
         # rule: instant only if confident AND trivial (label==0); else slow
         f = features_from_text(text)
         p = float(self.policy.predict_proba(self.emb.transform(f))[0, 0])
         conf = float(gaussian_cdf_fast(4.0 * abs(p - 0.5) - 1.0))
         label = int(p >= 0.5)  # 0 = trivial/instant-eligible, 1 = needs full
         if self.gate == "lr":
+            assert self.lr is not None
             go_instant = self.lr.predict_instant_proba(text) >= 0.5
         else:
             go_instant = label == 0 and conf >= self.INSTANT
@@ -362,15 +366,16 @@ class IntuitionInstant:
         return dict(label=label, path=path, p=p, conf=conf,
                     complexity=float(silu_alu(p)))
 
-    def route_batch(self, texts):
+    def route_batch(self, texts: list[str]) -> list[dict[str, Any]]:
         X = np.array([features_from_text(t) for t in texts], np.float32)
         P = self.policy.predict_proba(self.emb.transform(X))[:, 0]
-        out = []
+        out: list[dict[str, Any]] = []
         for t, p in zip(texts, P):
             f = np.asarray(features_from_text(t), np.float64)
             conf = float(gaussian_cdf_fast(4.0 * abs(float(p) - 0.5) - 1.0))
             label = int(p >= 0.5)
             if self.gate == "lr":
+                assert self.lr is not None
                 z = float(((f - self.lr.mu) / self.lr.sd) @ self.lr.w + self.lr.b)
                 go = sigmoid_alu(max(-30.0, min(30.0, z))) >= 0.5
             else:
@@ -391,7 +396,7 @@ class IntuitionInstant:
             return QUANTUM[name](x)
         raise KeyError(f"unknown kernel {name}")
 
-    def attributes(self, text: str) -> dict:
+    def attributes(self, text: str) -> dict[str, float]:
         """Quantum attribute profile of a text (instant layer meta-signal)."""
         f = features_from_text(text)
         return dict(

@@ -18,8 +18,10 @@ import os
 import re
 import time
 import urllib.request
+from typing import Any, cast
 
 import numpy as np
+import numpy.typing as npt
 
 from intuition import (
     CHAMPIONS,
@@ -78,7 +80,7 @@ _Q_DEFAULTS = {
 }
 
 
-def fast_resolve(prompt: str) -> dict:
+def fast_resolve(prompt: str) -> dict[str, Any]:
     """Instant symbolic resolution from tables/constants. tokens = 0."""
     t0 = time.perf_counter_ns()
     text = prompt or ""
@@ -86,7 +88,7 @@ def fast_resolve(prompt: str) -> dict:
     m = _NAME_RE.search(text)
     if m:
         name = m.group(1).lower()
-        detail: dict = {}
+        detail: dict[str, Any] = {}
         if name in CHAMPIONS:
             nm = _NUM_RE.search(text)
             x = float(nm.group()) if nm else 1.0
@@ -159,7 +161,7 @@ _FEAT_NAMES = (
 
 
 def _format_full(prompt: str, ps: list[float], conf: float, label: int,
-                 feats: np.ndarray, attrs: dict) -> str:
+                 feats: np.ndarray[Any, Any], attrs: dict[str, Any]) -> str:
     """Rich structured answer — real string/JSON work, the offline full body."""
     feat_lines = [f"{n}={float(v):+.4f}" for n, v in zip(_FEAT_NAMES, feats)]
     plan = [f"étape {i}: {s}" for i, s in enumerate(_FULL_SECTIONS, 1)]
@@ -209,10 +211,10 @@ def _format_full(prompt: str, ps: list[float], conf: float, label: int,
     return FULL_SYSTEM_TEMPLATE + prompt + "\n---\n" + blob + "\n" + body
 
 
-def _deliberate(layer: IntuitionInstant, prompt: str) -> tuple[list[float], np.ndarray]:
+def _deliberate(layer: IntuitionInstant, prompt: str) -> tuple[list[float], np.ndarray[Any, Any]]:
     """features+emb+policy per protocol aspect, then aggregate. Real CPU."""
     ps: list[float] = []
-    feats: np.ndarray | None = None
+    feats: np.ndarray[Any, Any] | None = None
     for i, aspect in enumerate(_PROTOCOL_ASPECTS):
         f = features_from_text(f"{aspect}: {prompt}")
         z = layer.emb.transform(f)
@@ -222,7 +224,7 @@ def _deliberate(layer: IntuitionInstant, prompt: str) -> tuple[list[float], np.n
     return ps, feats if feats is not None else features_from_text(prompt)
 
 
-def full_offline(prompt: str) -> dict:
+def full_offline(prompt: str) -> dict[str, Any]:
     """Honest offline full policy: real CPU wall-clock, documented token proxy."""
     t0 = time.perf_counter_ns()
     layer = _layer()
@@ -268,14 +270,14 @@ def detect_llm(timeout: float = 0.35) -> str | None:
     return None
 
 
-def _post_json(url: str, payload: dict, headers: dict, timeout: float = 60.0) -> dict:
+def _post_json(url: str, payload: dict[str, Any], headers: dict[str, str], timeout: float = 60.0) -> dict[str, Any]:
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
         url, data=data, method="POST",
         headers={"Content-Type": "application/json", **headers},
     )
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode("utf-8"))
+        return cast("dict[str, Any]", json.loads(r.read().decode("utf-8")))
 
 
 def _call_llm(backend: str, prompt: str) -> tuple[str, int]:
@@ -322,7 +324,7 @@ def _call_llm(backend: str, prompt: str) -> tuple[str, int]:
     raise RuntimeError(f"unknown backend {backend}")
 
 
-def full_resolve(prompt: str, allow_live: bool = True) -> dict:
+def full_resolve(prompt: str, allow_live: bool = True) -> dict[str, Any]:
     """Full path: live LLM if detected, else honest offline full policy.
 
     Live call failures fall back to offline (flagged backend=offline_fallback).

@@ -5,6 +5,7 @@ D = os.path.dirname(os.path.abspath(__file__))
 N = lambda p: os.path.join(D, p)
 TIMEOUT = 60
 TESTS = [
+    ("typecheck.py", ["python", "typecheck.py"]),
     ("eval_harness.py --self-check", ["python", "eval_harness.py", "--self-check"]),
     ("multi_conf.py", ["python", "multi_conf.py"]),
     ("test_slow_path.py", ["python", "test_slow_path.py"]),
@@ -12,6 +13,7 @@ TESTS = [
     ("test_reports.py", ["python", "test_reports.py"]),
     ("test_discover.py", ["python", "test_discover.py"]),
     ("test_showcase.js", ["node", "test_showcase.js"]),
+    ("cov.py", ["python", "cov.py"]),
     ("wasm_bench.js", ["node", "wasm_bench.js"]),
     ("wasm_batch_bench.js", ["node", "wasm_batch_bench.js"]),
 ]

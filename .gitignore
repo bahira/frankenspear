@@ -1,3 +1,5 @@
 __pycache__/
 wasm_freestanding/
 node_modules/
+tmp_weights.json
+.coverage

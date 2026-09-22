@@ -106,12 +106,45 @@ def test_ece_present():
     print("OK ece", {k: cal[k]["ece"] for k in ("retrained", "toy", "logistic_regression")})
 
 
+def test_full_surface():
+    from intuition import CHAMPIONS, QUANTUM, export_weights, demo
+    import json
+    layer = IntuitionInstant(seed=42, gate="conf")
+    for name, fn in CHAMPIONS.items():
+        out = float(fn(1.25))
+        assert np.isfinite(out), name
+    for name, fn in QUANTUM.items():
+        out = float(fn(*([1.0] * 4 if name in ("concurrence", "chsh") else
+                         [3, 1, 4] if name == "grover" else
+                         [2, 0.5, 0.05] if name == "qfi" else
+                         [0.55, 1.0] if name == "kelly" else
+                         [12, 4] if name == "rsi" else [0.9])))
+        assert np.isfinite(out), name
+    r = layer.route("quantum chsh grover concurrence")
+    assert r["path"] in ("instant", "slow")
+    assert 0.0 <= layer.confidence("salut") <= 1.0
+    at = layer.attributes("quantum chsh grover")
+    assert set(at) == {"concurrence", "chsh", "lorentz_gamma", "qfi", "kelly"}
+    assert all(np.isfinite(v) for v in at.values())
+    p = export_weights(path="tmp_weights.json", seed=42)
+    a = json.loads(open(p, encoding="utf-8").read())
+    b = json.loads(open("slm-weights.json", encoding="utf-8").read())
+    assert np.allclose(np.asarray(a["W"], dtype=float), np.asarray(b["W"], dtype=float), atol=1e-6)
+    assert np.allclose(np.asarray(a["lr"]["w"], dtype=float), np.asarray(b["lr"]["w"], dtype=float), atol=1e-6)
+    from intuition import FAST
+    for fn in FAST.values():
+        assert np.isfinite(float(fn(1.0)))
+    demo()
+    print("OK surface: 12 champions + 7 quantum + confidence/attributes/export")
+
+
 def main() -> None:
     tests = (test_champions_match_ref, test_quantum, test_gate_lr_beats_conf,
-             test_cache_consistency, test_batch_matches_single, test_ece_present)
+             test_cache_consistency, test_batch_matches_single, test_ece_present,
+             test_full_surface)
     for t in tests:
         t()
-        print(f"OK {t.__name__}")
+        print(f"OK {t.__name__}" if not t.__name__.startswith("test_ece") else "")
     print(f"{len(tests)} tests passed")
 
 

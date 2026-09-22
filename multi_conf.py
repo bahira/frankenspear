@@ -130,9 +130,9 @@ def _calibrate(S, corr):
                     n = _nll(sigmoid_alu(k * s - b), corr)
                     if n < best[0]:
                         best = (n, (float(w[0]), float(w[1]), float(w[2]), float(k), float(b)))
-    w1, w2, w3, k, b = best[1]
-    w3 = 0.0 if abs(w3) < 1e-9 else w3
-    return best[0], (w1, w2, w3, k, b)
+    w1v, w2v, w3v, kv, bv = best[1]
+    w3v = 0.0 if abs(w3v) < 1e-9 else w3v
+    return best[0], (w1v, w2v, w3v, kv, bv)
 
 
 class MultiConfModel:
@@ -203,7 +203,7 @@ class MultiConfModel:
 _MODEL = None
 
 
-def get_model():
+def get_model() -> "MultiConfModel":
     global _MODEL
     if _MODEL is None:
         _MODEL = MultiConfModel(seed=0, n=800)
@@ -212,7 +212,7 @@ def get_model():
 
 def conf_multi_source(text: str) -> float:
     """Fused multi-source confidence in [0,1]."""
-    return get_model().conf(get_model().signals(text))
+    return float(get_model().conf(get_model().signals(text)))
 
 
 def conf_scalar(text: str) -> float:

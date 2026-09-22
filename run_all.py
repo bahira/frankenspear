@@ -7,6 +7,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 CMDS = [
+    ["python", "typecheck.py"],
     ["python", "intuition.py"],
     ["python", "eval_harness.py", "--self-check"],
     ["python", "multi_conf.py"],
@@ -18,6 +19,7 @@ CMDS = [
     ["node", "wasm_bench.js"],
     ["node", "wasm_batch_bench.js"],
     ["node", "test_showcase.js"],
+    ["python", "cov.py"],
     ["python", "export_csv.py"],
     ["python", "make_report.py"],
 ]

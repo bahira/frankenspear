@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from typing import Any
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -39,9 +40,9 @@ TOPICS = (
 )
 
 
-def build_dataset() -> list[dict]:
+def build_dataset() -> list[dict[str, Any]]:
     """Mix of instant-eligible (closed-form answer exists) and full-only prompts."""
-    rows: list[dict] = []
+    rows: list[dict[str, Any]] = []
 
     def add(text: str, ok: bool) -> None:
         rows.append({"prompt": text, "instant_ok": bool(ok)})
@@ -74,7 +75,7 @@ def build_dataset() -> list[dict]:
     return rows
 
 
-def _stats(samples_ns: list[int]) -> dict:
+def _stats(samples_ns: list[int]) -> dict[str, Any]:
     a = np.asarray(samples_ns, dtype=float) / 1e3  # -> us
     return dict(
         p50_us=round(float(np.percentile(a, 50)), 2),
@@ -83,8 +84,8 @@ def _stats(samples_ns: list[int]) -> dict:
     )
 
 
-def _run_scenario(name: str, rows: list[dict], layer: IntuitionInstant,
-                  allow_live: bool) -> dict:
+def _run_scenario(name: str, rows: list[dict[str, Any]], layer: IntuitionInstant,
+                  allow_live: bool) -> dict[str, Any]:
     lat: list[int] = []
     full_calls = 0
     tokens = 0
@@ -132,7 +133,7 @@ def _run_scenario(name: str, rows: list[dict], layer: IntuitionInstant,
     return out
 
 
-def _bench_paths(rows: list[dict], n: int = 250) -> dict:
+def _bench_paths(rows: list[dict[str, Any]], n: int = 250) -> dict[str, Any]:
     """Pure path CPU comparison (offline full — measures path mechanics)."""
     fast_samples: list[int] = []
     full_samples: list[int] = []
@@ -152,7 +153,7 @@ def _bench_paths(rows: list[dict], n: int = 250) -> dict:
 
 
 def run(out_path: Path | str | None = None, allow_live: bool = True,
-        rows: list[dict] | None = None, n_path: int = 250) -> dict:
+        rows: list[dict[str, Any]] | None = None, n_path: int = 250) -> dict[str, Any]:
     import gc
 
     rows = rows or build_dataset()
@@ -225,7 +226,7 @@ def run(out_path: Path | str | None = None, allow_live: bool = True,
     return report
 
 
-def print_table(report: dict) -> None:
+def print_table(report: dict[str, Any]) -> None:
     hdr = f"{'scenario':<13}{'p50_us':>10}{'p99_us':>10}{'mean_us':>10}{'full_rate':>10}{'tokens':>10}{'false_inst':>12}{'inst_miss':>10}"
     print(hdr)
     print("-" * len(hdr))

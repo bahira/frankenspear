@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from typing import Any
 
 import numpy as np
 
@@ -254,7 +255,7 @@ def fit_lr(X, y, epochs=400, lr=0.5, seed=0):
     return w, b
 
 
-def run() -> dict:
+def run() -> dict[str, Any]:
     texts, y = build_corpus()
     tr, te = stratified_split(y)
     X = np.array([features_from_text(t) for t in texts], np.float32)
@@ -304,7 +305,7 @@ def run() -> dict:
     return report
 
 
-def self_check(rep: dict, y, tr, te) -> None:
+def self_check(rep: dict[str, Any], y, tr, te) -> None:
     assert len(y) >= 200, f"corpus too small: {len(y)}"
     assert set(tr).isdisjoint(te), "split leak: train/holdout overlap"
     assert len(tr) + len(te) == len(y), "split incomplete"
@@ -325,7 +326,7 @@ def self_check(rep: dict, y, tr, te) -> None:
         assert "max_f1" in rep["best_thresholds"][side], "missing best threshold"
 
 
-def print_table(rep: dict) -> None:
+def print_table(rep: dict[str, Any]) -> None:
     rows = [("gate_retrained@0.65", rep["gate_retrained"]),
             ("gate_toy@0.65", rep["gate_toy"])]
     rows += [(f"{k}", v) for k, v in rep["baselines"].items()]
