@@ -44,6 +44,58 @@ def _js_eval(formula_js, args):
 _TERNARY = re.compile(r"\(([^()?]+)\?([^()?]+):([^()?]+)\)")
 
 
+def _split_top(s, sep):
+    depth = 0
+    for i, ch in enumerate(s):
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        elif ch == sep and depth == 0:
+            return i
+    return -1
+
+
+def _match_open(s, close_i):
+    stack = []
+    for i, ch in enumerate(s):
+        if ch == "(":
+            stack.append(i)
+        elif ch == ")":
+            if not stack:
+                continue
+            j = stack.pop()
+            if i == close_i:
+                return j
+    return -1
+
+
+def _tern(s):
+    # convert js ternaries "cond ? a : b" at innermost level, repeat
+    while "?" in s:
+        qi = s.index("?")
+        depth, ci, ci_end = 0, -1, -1
+        for i in range(qi + 1, len(s)):
+            ch = s[i]
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                if depth == 0:
+                    ci_end = i
+                    break
+                depth -= 1
+            elif ch == ":" and depth == 0 and ci < 0:
+                ci = i
+        if ci < 0 or ci_end < 0:
+            break
+        oi = _match_open(s[:ci_end + 1], ci_end)
+        if oi < 0 or oi > qi:
+            break
+        cond, a, b = s[oi + 1:qi].strip(), s[qi + 1:ci].strip(), s[ci + 1:ci_end].strip()
+        s = s[:oi] + f"({a} if {cond} else {b})" + s[ci_end + 1:]
+    return s
+
+
 def _np_from_py(py_str):
     # ponytail: torch->numpy name map + JS-ternary rewrite; extend if specs drift
     s = py_str
@@ -60,7 +112,7 @@ def _np_from_py(py_str):
          .replace("torch.sin", "np.sin")
          .replace("torch.atan", "np.arctan")
          .replace("torch.clamp", "np.clip"))
-    s = _TERNARY.sub(r"(\2 if \1 else \3)", s)
+    s = _tern(s)
     code = s[s.index("def spear_fn"):]
     ns = {"np": np, "_relu": lambda x: np.maximum(x, 0.0)}
     exec(code, ns)

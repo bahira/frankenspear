@@ -15,9 +15,9 @@ def test_golden():
     assert abs(b["meta"]["checksum_sink"] - 8185846.975385929) < 2.0
     e = load("e2e_report.json")
     v = e["verdict"]
-    # latence = moyenne bruitseepar warmup (jitter 7->62 selon pass); tokens stables
-    assert v["token_savings_pct"] / 100 >= 0.45
-    assert v["latency_savings_pct"] / 100 >= 0.05
+    # median 3 passes : lat 0.60-0.80, tok stable
+    assert 0.60 <= v["latency_savings_pct"] / 100 <= 0.80
+    assert 0.45 <= v["token_savings_pct"] / 100 <= 0.65
     assert v["gate_saves_latency"] and v["gate_saves_tokens"]
     assert v["false_instant_rate_gated_lr"] == 0.0
     assert v["quality_ok"] is True

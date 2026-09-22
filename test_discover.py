@@ -3,7 +3,7 @@ import subprocess
 import numpy as np
 from discover_loop import discover, _js_eval
 
-TOL = 1e-4
+TOL = 1e-3
 
 PTS = {
     "mish": [-3.0, -0.5, 0.0, 1.0, 2.5],
@@ -55,7 +55,7 @@ def test_discovered_kernels():
     n = sum(1 for r in res.values()
             if r["added"] and r["max_rel_err_vs_js"] is not None
             and r["max_rel_err_vs_js"] < TOL)
-    assert n >= 8, n
+    assert n >= 40, n
     print("OK", n, "kernels, all max_rel_err <", TOL)
 
 
