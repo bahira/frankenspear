@@ -1,0 +1,512 @@
+[
+  {
+    "id": "kv_cache",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "free_fall",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "kepler",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "gaussian_cdf",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "damped_pendulum",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 7.896080528210222e-07
+  },
+  {
+    "id": "rl_distillation",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "lambert_w",
+    "added": true,
+    "numpy": "lambert_w",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "rc_circuit",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.00011016686612988457
+  },
+  {
+    "id": "gaussian_kernel",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "diffusion_beta",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "bilinear_interp",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "european_call",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 4.01717345079884e-06
+  },
+  {
+    "id": "temporal_grad",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "hill",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "kerr",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "lennard_jones",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "damped_oscillation",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "logistic_growth",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "softplus",
+    "added": true,
+    "numpy": "softplus",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "kdv_soliton",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "kerr_spin",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "pendulum_hybrid",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "eigen3_sym",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "ik_reach",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "idm_following",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "gemv4",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "rope_rot",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "gauss_shader",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "ema_smooth",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "smoothstep",
+    "added": true,
+    "numpy": "smoothstep",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "srgb_gamma",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 6.1500354031784455e-06
+  },
+  {
+    "id": "tanh_sat",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "atan_unit",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "srgb_decode",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0002037184301689815
+  },
+  {
+    "id": "erf_prob",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "huber_loss",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "cosh_curve",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0005027428141769647
+  },
+  {
+    "id": "bessel_j0",
+    "added": true,
+    "numpy": "bessel_j0",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "bessel_j1",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "blackbody_r",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "aces_fit",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "logsumexp2",
+    "added": true,
+    "numpy": "logsumexp2",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "probit_quantile",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 2.126942094431091e-07
+  },
+  {
+    "id": "pmt_finance",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "blackbody_g",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "blackbody_b",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 7.766843575828892e-16
+  },
+  {
+    "id": "bessel_j2",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "logit_ml",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "kelly_criterion",
+    "added": true,
+    "numpy": "kelly_criterion",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "rsi_momentum",
+    "added": true,
+    "numpy": "rsi_momentum",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "implied_vol",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "michaelis_menten",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "temperature_softmax",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "doppler_effect",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "stefan_boltzmann",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "mm1_queue_wait",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "grover_amplitude",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "concurrence_pure",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "chsh_correlation",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "legendre_p2",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "laguerre_l2",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 2.3529778015649735e-06
+  },
+  {
+    "id": "asin_hard",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "qfi_dephasing",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "amp_damp_fid",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "loschmidt_rate",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 3.0905388888455926e-05
+  },
+  {
+    "id": "bessel_i0e",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "elliptic_k",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "kepler_solver",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 1.3174389795731081e-06
+  },
+  {
+    "id": "fast_exp_alu",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "fresnel_schlick",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "rayleigh_phase",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "smootherstep",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0
+  },
+  {
+    "id": "fog_exp2",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 7.505897359532538e-07
+  },
+  {
+    "id": "back_ease_out",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "light_falloff_punctual",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "bias_slope",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "uncharted2_tonemap",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "mish",
+    "added": true,
+    "numpy": "mish",
+    "max_rel_err_vs_js": 2.1984485254747836e-16
+  },
+  {
+    "id": "rope_freq",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 1.521742969819829e-06
+  },
+  {
+    "id": "bilateral_weight",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "bs_d1_sigma",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "mel_scale",
+    "added": true,
+    "numpy": "spear_fn",
+    "max_rel_err_vs_js": 0.0003004297235897218
+  },
+  {
+    "id": "bs_d2_sigma",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "a_weighting",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  },
+  {
+    "id": "layernorm_scale",
+    "added": false,
+    "numpy": null,
+    "max_rel_err_vs_js": null
+  }
+]
