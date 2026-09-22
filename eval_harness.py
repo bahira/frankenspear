@@ -239,6 +239,19 @@ def calibration(y, p, conf, nb=10):
     return {"bins": bins, "ece": round(float(ece), 4)}
 
 
+def ece_score(p, y, nb=10):
+    """Expected calibration error: bins of max(p,1-p) vs binary accuracy."""
+    p = np.asarray(p, np.float64)
+    conf = np.maximum(p, 1.0 - p)
+    acc = ((p >= 0.5).astype(int) == np.asarray(y).astype(int)).astype(np.float64)
+    ece = 0.0
+    for ch in np.array_split(np.argsort(conf), nb):
+        if not len(ch):
+            continue
+        ece += len(ch) / len(p) * abs(float(conf[ch].mean()) - float(acc[ch].mean()))
+    return float(ece)
+
+
 def fit_lr(X, y, epochs=400, lr=0.5, seed=0):
     rng = np.random.RandomState(seed)
     w = np.zeros(X.shape[1])

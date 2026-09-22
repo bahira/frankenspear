@@ -11,11 +11,13 @@ TESTS = [
     ("test_slow_path.py", ["python", "test_slow_path.py"]),
     ("test_intuition.py", ["python", "test_intuition.py"]),
     ("test_reports.py", ["python", "test_reports.py"]),
+    ("test_properties.py", ["python", "test_properties.py"]),
     ("test_discover.py", ["python", "test_discover.py"]),
     ("test_showcase.js", ["node", "test_showcase.js"]),
     ("cov.py", ["python", "cov.py"]),
     ("gen_showcase.py", ["python", "gen_showcase.py"]),
     ("changelog.py", ["python", "changelog.py"]),
+    ("demo_agent.py", ["python", "demo_agent.py"]),
     ("wasm_bench.js", ["node", "wasm_bench.js"]),
     ("wasm_batch_bench.js", ["node", "wasm_batch_bench.js"]),
 ]

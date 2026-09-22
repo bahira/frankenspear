@@ -18,17 +18,17 @@ python make_report.py  # REPORT.md + REPORT.json (statut + changelog)
 
 ## Resultats
 
-| gate (holdout n=48) | F1 | precision | recall | faux-instant |
-|---|---|---|---|---|
-| logistic_regression (defaut) | 0.844 | 0.826 | 0.864 | 0.174 |
-| gate_retrained @0.65 | 0.606 | 0.455 | 0.909 | 0.546 |
-| len baseline (<12 mots) | 0.657 | 0.489 | 1.000 | 0.511 |
+<!-- BEGIN gate -->
+('0.8444', '0.8261', '0.8636', '0.1739')
+<!-- END gate -->
 
-E2E (n=109), `gated_lr`: ~45-50% latence et ~55% tokens vs `always_full`, false-instant 0.00.
-E2E multi-conf (negative result): pas de gain sur le scalaire -> formule Φ(4|p-0.5|-1) conservee.
+<!-- BEGIN e2e -->
+('73.1', '55.2', '-')
+<!-- END e2e -->
 
-WASM vs JS ALU: scalar 0.08x (import-heavy) / 0.35-0.42x (freestanding); batch >1x des
-N=4096 (jusqu'a 2.6x) — le cout de boundary est amorti, pas le nombre de specs.
+<!-- BEGIN wasm -->
+freestanding_vs_js_alu=0.2595; importheavy_vs_js_alu=0.06152; importheavy_vs_js_pkg=0.359
+<!-- END wasm -->
 
 ## Architecture
 

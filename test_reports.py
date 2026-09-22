@@ -30,7 +30,9 @@ def test_golden():
 
 def main():
     test_golden()
-    print("1 tests passed")
+    from schema import SCHEMAS, validate
+    assert not validate(load("eval_report.json"), SCHEMAS["eval_report.json"]), "schema eval_report.json"
+    print("2 tests passed")
 
 
 if __name__ == "__main__":

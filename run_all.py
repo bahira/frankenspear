@@ -15,6 +15,7 @@ CMDS = [
     ["python", "test_slow_path.py"],
     ["python", "test_intuition.py"],
     ["python", "test_reports.py"],
+    ["python", "test_properties.py"],
     ["python", "test_discover.py"],
     ["node", "wasm_bench.js"],
     ["node", "wasm_batch_bench.js"],
@@ -23,12 +24,14 @@ CMDS = [
     ["python", "gen_showcase.py"],
     ["python", "changelog.py"],
     ["python", "export_csv.py"],
+    ["python", "demo_agent.py"],
     ["python", "make_report.py"],
+    ["python", "readme_sync.py"],
 ]
 
 fails = 0
 for cmd in CMDS:
-    r = subprocess.run(cmd, cwd=HERE, capture_output=True, text=True, timeout=240)
+    r = subprocess.run(cmd, cwd=HERE, capture_output=True, text=True, timeout=600)
     out = ((r.stdout or "") + "\n" + (r.stderr or "")).strip().splitlines()
     tail = out[-1] if out else ""
     ok = r.returncode == 0

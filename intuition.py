@@ -186,6 +186,12 @@ def features_from_text(text: str) -> np.ndarray[Any, Any]:
     return _features_uncached(text)
 
 
+def get_cache_stats() -> tuple[int, int, int]:
+    hits, misses, maxsize, _ = features_from_text.cache_info()
+    i = lambda v: 0 if v is None else int(v)
+    return (i(hits), i(misses), i(maxsize))
+
+
 def _features_uncached(text: str) -> np.ndarray[Any, Any]:
     t = (text or "").lower()
     words = t.split()
@@ -277,12 +283,37 @@ class TinyPolicy:
                 self.b1 -= lr_t * dz.sum(0)
 
 
+def _golden_nll(Xn, y, w, b, lo=0.1, hi=3.0, iters=30):
+    """Temperature scaling: golden-section minimization of NLL over [lo, hi]."""
+    z = Xn @ w + b
+
+    def nll(T):
+        p = np.clip(1.0 / (1.0 + np.exp(-z / T)), 1e-12, 1.0 - 1e-12)
+        return -float(np.mean(y * np.log(p) + (1.0 - y) * np.log(1.0 - p)))
+
+    phi = 0.618
+    c = hi - phi * (hi - lo)
+    d = lo + phi * (hi - lo)
+    fc, fd = nll(c), nll(d)
+    for _ in range(iters):
+        if fc < fd:
+            hi, d, fd = d, c, fc
+            c = hi - phi * (hi - lo)
+            fc = nll(c)
+        else:
+            lo, c, fc = c, d, fd
+            d = lo + phi * (hi - lo)
+            fd = nll(d)
+    return 0.5 * (lo + hi)
+
+
 class LogisticGate:
     """Logistic gate on the 16 raw features: predicts P(trivial)."""
 
     def __init__(self, mu: Any, sd: Any, w: Any, b: float) -> None:
         self.mu, self.sd = np.asarray(mu, np.float64), np.asarray(sd, np.float64)
         self.w, self.b = np.asarray(w, np.float64), float(b)
+        self.T = 1.0
 
     @classmethod
     def fit(cls, X: np.ndarray[Any, Any], y_trivial: np.ndarray[Any, Any],
@@ -290,13 +321,15 @@ class LogisticGate:
         from eval_harness import fit_lr  # lazy — eval_harness imports intuition
         X = np.atleast_2d(np.asarray(X, np.float64))
         mu, sd = X.mean(0), X.std(0) + 1e-6
-        w, b = fit_lr((X - mu) / sd, np.asarray(y_trivial, np.float64),
-                      epochs=epochs, lr=lr, seed=seed)
-        return cls(mu, sd, w, b)
+        y = np.asarray(y_trivial, np.float64)
+        w, b = fit_lr((X - mu) / sd, y, epochs=epochs, lr=lr, seed=seed)
+        T = _golden_nll((X - mu) / sd, y, w, b, lo=0.1, hi=3.0)
+        obj = cls(mu, sd, w, b); obj.T = T; return obj
 
     def predict_instant_proba(self, text: str) -> float:
         f = np.asarray(features_from_text(text), np.float64)
-        return float(sigmoid_alu(((f - self.mu) / self.sd) @ self.w + self.b))
+        z = (((f - self.mu) / self.sd) @ self.w + self.b) / self.T
+        return float(sigmoid_alu(max(-30.0, min(30.0, z))))
 
 
 def _lr_from_corpus(train_only: bool = True) -> LogisticGate:
@@ -370,8 +403,8 @@ class IntuitionInstant:
         X = np.array([features_from_text(t) for t in texts], np.float32)
         P = self.policy.predict_proba(self.emb.transform(X))[:, 0]
         out: list[dict[str, Any]] = []
-        for t, p in zip(texts, P):
-            f = np.asarray(features_from_text(t), np.float64)
+        for i, (t, p) in enumerate(zip(texts, P)):
+            f = np.asarray(X[i], np.float64)
             conf = float(gaussian_cdf_fast(4.0 * abs(float(p) - 0.5) - 1.0))
             label = int(p >= 0.5)
             if self.gate == "lr":
@@ -437,7 +470,7 @@ def export_weights(path: str = "slm-weights.json", seed: int = 42) -> str:
     yt = y[tr]
     emb = SpearEmb.fit(X, seed=seed)
     pol = TinyPolicy.init(emb.d_out, h=32, seed=seed)
-    pol.fit(emb.transform(X), yt.astype(np.float32), epochs=150, lr=0.05, seed=0)
+    pol.fit(emb.transform(X), yt.astype(np.float32), epochs=120, lr=0.05, seed=0)
     mu, sd = X.mean(0), X.std(0) + 1e-6
     w, b = fit_lr((X - mu) / sd, (yt == 0).astype(np.float64))
     out = dict(
@@ -453,7 +486,13 @@ def export_weights(path: str = "slm-weights.json", seed: int = 42) -> str:
 
 
 if __name__ == "__main__":
-    if "--export" in sys.argv:
-        print("wrote", export_weights())
-    else:
-        demo()
+    import argparse
+    parser = argparse.ArgumentParser(description="Intuition Instant Layer")
+    parser.add_argument("mode", nargs="?", default="demo", choices=["demo","route","bench","export"])
+    parser.add_argument("--text", default="salut")
+    parser.add_argument("--path", default="slm-weights.json")
+    ns = parser.parse_args()
+    if ns.mode == "demo": demo()
+    elif ns.mode == "route": layer = IntuitionInstant(seed=42); print(layer.route(ns.text))
+    elif ns.mode == "bench": import subprocess; subprocess.run(["python","run_all.py"])
+    elif ns.mode == "export": print("wrote", export_weights(path=ns.path))

@@ -35,6 +35,24 @@ def main() -> None:
     m = re.search(r'(<script type="application/json" id="bench">)([\s\S]*?)(</script>)', html)
     assert m is not None, "bench block not found"
     out = html[:m.start(2)] + js + html[m.end(2):]
+    # slm block: q8 int8 si present, decode /scale sinon f32 direct
+    qp, sp = HERE / "slm-weights-q8.json", HERE / "slm-weights.json"
+    src = qp if qp.exists() else sp
+    slm = json.loads(src.read_text(encoding="utf-8"))
+    scale = slm.get("scale") if isinstance(slm.get("scale"), (int, float)) else None
+
+    def dec(v):
+        if isinstance(v, list):
+            return [dec(x) for x in v]
+        if isinstance(v, dict):
+            return {k: dec(x) for k, x in v.items()}
+        return v / scale if scale else v
+
+    if scale:
+        slm = {k: dec(v) for k, v in slm.items() if k != "scale"}
+    m2 = re.search(r'(<script type="application/json" id="slm">)([\s\S]*?)(</script>)', out)
+    if m2 is not None:
+        out = out[:m2.start(2)] + json.dumps(slm, separators=(",", ":")) + out[m2.end(2):]
     (HERE / "showcase.html").write_text(out, encoding="utf-8")
     print(f"bench block regenere ({len(js)} octets)")
 

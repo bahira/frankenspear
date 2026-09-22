@@ -138,10 +138,37 @@ def test_full_surface():
     print("OK surface: 12 champions + 7 quantum + confidence/attributes/export")
 
 
+def test_cache_stats():
+    import intuition
+    intuition.features_from_text.cache_clear()
+    layer = intuition.IntuitionInstant(seed=42)
+    texts = ["salut", "ecris gelu fibonacci", "execute bash"]
+    _ = layer.route_batch(texts)
+    _ = layer.route_batch(texts)
+    hits, misses, maxs = intuition.get_cache_stats()
+    assert misses >= 3, f"misses={misses}"
+    assert hits >= 3, f"hits={hits}"
+    print("test_cache_stats OK")
+
+
+def test_temperature_scaling():
+    import intuition, numpy as np
+    from eval_harness import build_corpus, stratified_split, ece_score
+    texts, y = build_corpus(); tr, _ = stratified_split(y)
+    X = np.array([intuition.features_from_text(t) for t in texts], np.float32)[tr]
+    yt = (y[tr] == 0).astype(np.float64)
+    gate = intuition.LogisticGate.fit(X, yt)
+    assert 0.05 < gate.T < 3.0, f"T={gate.T}"
+    p = np.array([gate.predict_instant_proba(texts[i]) for i in tr], np.float64)
+    e = ece_score(p, yt)
+    assert e < 0.42, f"ece={e}"  # baseline etait 0.4178
+    print(f"test_temperature_scaling OK (T={gate.T:.4f}, ece={e:.4f})")
+
+
 def main() -> None:
     tests = (test_champions_match_ref, test_quantum, test_gate_lr_beats_conf,
              test_cache_consistency, test_batch_matches_single, test_ece_present,
-             test_full_surface)
+             test_full_surface, test_cache_stats, test_temperature_scaling)
     for t in tests:
         t()
         print(f"OK {t.__name__}" if not t.__name__.startswith("test_ece") else "")

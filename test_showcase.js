@@ -32,6 +32,19 @@ function geluQuintic(x){ const t=Math.max(0,Math.min(1,0.200055340257*x+0.5));
   return x*t*t*t*(6*t*t-15*t+10)-0.01104961; }
 function gaussKernel(x){ return tanhPade(0.6*x); }
 function gaussianCdfFast(x){ return 0.625605*(x/(0.912761+Math.abs(x)))+0.5; }
+function geluErf(x){ return 0.5*x*(1+ENV.erf(x*0.7071067811865476)); }
+function geluFast(x){ return 1.010719*Math.max(x,0)-0.057684; }
+function siluFast(x){ return 1.016356*Math.max(x,0)-0.15849; }
+function sigmoidFast(x){ return 0.605014*(x/(1.24384+Math.abs(x)))+0.5; }
+function lorentzKernel(x){ const b=tanhPade(0.5*x); return 1/Math.sqrt(Math.max(1e-12,1-0.8*b*b)); }
+function lorentzGammaRef(b){ const b2=Math.min(1-1e-12,Math.max(0,b*b)); return 1/Math.sqrt(1-b2); }
+function kellyRef(edge, odds){ return Math.min(1,Math.max(-1,edge/Math.max(odds,1e-9))); }
+function rsiRef(up, down){ const rs=Math.max(up,1e-9)/Math.max(down,1e-9); return 100-100/(1+rs); }
+function groverRef(k, m, n){ const th=Math.asin(Math.sqrt(Math.min(1,Math.max(0,m/Math.max(n,1e-12))))); return Math.pow(Math.sin((2*k+1)*th),2); }
+function qfiRef(n, t, g){ return n*n*t*t*Math.exp(-n*n*g*t); }
+function probitRef(x){ const y=Math.min(0.999999,Math.max(-0.999999,2*x-1)); const a=0.147; const ln=Math.log(1-y*y); const t1=2/(Math.PI*a)+ln/2; return Math.sign(y)*Math.sqrt(Math.sqrt(t1*t1-ln/a)-t1)*Math.SQRT2; }
+function chshRef(e, m, o, p){ return e*m+e*o+p*m-p*o; }
+function concRef(a, b, c, d){ return 2*Math.abs(a*d-b*c); }
 
 const TOOL_RE = /(tool|bash|edit|exec|lance|exécute|execute)/;
 function features(text) {
@@ -107,14 +120,45 @@ function predict(x) {
   }
   console.log('wasm smoke', ok, 'ok', fail, 'fail');
 
-  // expected from python intuition.py (seed 42), new gate rule:
+  // T14: champion parity JS ref vs python ref (intuition.py), rel tol 1e-4
+  const rel = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1e-9);
+  const parity = [
+    ['tanh', tanhPade(1.5), 0.9055197318386261],
+    ['sigmoid', sigmoidAlu(1.5), 0.8169713957160551],
+    ['silu', siluAlu(1.5), 1.2254570935740827],
+    ['gelu_quintic', geluQuintic(1.5), 1.4021659881965116],
+    ['gelu_erf', geluErf(1.5), 1.3997891535352465],
+    ['gelu_fast', geluFast(1.5), 1.4583944999999998],
+    ['silu_fast', siluFast(1.5), 1.366044],
+    ['sigmoid_fast', sigmoidFast(1.5), 0.8307485130328299],
+    ['gauss', gaussKernel(1.5), 0.7155095961870606],
+    ['lorentz_kernel', lorentzKernel(1.5), 1.214023911627946],
+    ['gauss_cdf', gaussianCdfFast(1.5), 0.8889351245316051],
+    ['probit_075', probitRef(0.75), 0.6745742468752852],
+    ['probit_01', probitRef(0.1), -1.2817128991385738],
+    ['concurrence', concRef(1, 0, 0, 1), 2.0],
+    ['chsh', chshRef(1, 2, 3, 4), 1.0],
+    ['grover', groverRef(1, 25, 1024), 0.20565427839756012],
+    ['qfi', qfiRef(3, 0.5, 0.05), 1.7966614922085984],
+    ['lorentz_gamma', lorentzGammaRef(0.8), 1.666666666666667],
+    ['kelly', kellyRef(0.4, 0.8), 0.5],
+    ['rsi', rsiRef(2.0, 1.0), 66.66666666666666],
+  ];
+  let pOk = 0;
+  for (const [id, a, b] of parity) {
+    if (rel(a, b) < 1e-4) pOk++;
+    else { console.log('PARITY MISMATCH', id, a, b, rel(a, b)); fail++; }
+  }
+  console.log('champion parity', pOk + '/' + parity.length);
+
+  // expected from python intuition.py export (slm-weights, epochs=120), gate rule:
   // path = (label===0 && conf>=0.65) ? 'instant' : 'slow', label = p>=0.5?1:0
   const tests = [
-    ['salut', 0.490, 0.179, 'slow'],
-    ['écris une fonction gelu', 0.847, 0.686, 'slow'],
-    ['exécute le bash', 0.614, 0.266, 'slow'],
-    ['quantum chsh grover concurrence', 0.307, 0.375, 'slow'],
-    ['quoi est-ce que tanh', 0.649, 0.308, 'slow'],
+    ['salut', 0.017, 0.816, 'instant'],
+    ['écris une fonction gelu', 0.316, 0.359, 'slow'],
+    ['exécute le bash', 0.985, 0.817, 'slow'],
+    ['quantum chsh grover concurrence', 0.026, 0.810, 'instant'],
+    ['quoi est-ce que tanh', 0.001, 0.826, 'instant'],
   ];
   let routerOk = true;
   for (const [text, ep, ec, epath] of tests) {
@@ -135,7 +179,7 @@ function predict(x) {
     for (const [text, ep, epath] of lrTests) {
       const f = features(text);
       let z = b;
-      for (let i = 0; i < f.length; i++) z += w[i] * ((f[i] - mu[i]) / sd[i]);
+      for (let i = 0; i < f.length; i++) z += w[i] * ((f[i] - mu[i]) / (sd[i] || 1));
       const pt = 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, z))));
       const pth = pt >= 0.5 ? 'instant' : 'slow';
       const pass = Math.abs(pt - ep) < 0.02 && pth === epath;
