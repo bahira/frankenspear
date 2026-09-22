@@ -14,6 +14,8 @@ TESTS = [
     ("test_discover.py", ["python", "test_discover.py"]),
     ("test_showcase.js", ["node", "test_showcase.js"]),
     ("cov.py", ["python", "cov.py"]),
+    ("gen_showcase.py", ["python", "gen_showcase.py"]),
+    ("changelog.py", ["python", "changelog.py"]),
     ("wasm_bench.js", ["node", "wasm_bench.js"]),
     ("wasm_batch_bench.js", ["node", "wasm_batch_bench.js"]),
 ]

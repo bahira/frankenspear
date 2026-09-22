@@ -20,6 +20,8 @@ CMDS = [
     ["node", "wasm_batch_bench.js"],
     ["node", "test_showcase.js"],
     ["python", "cov.py"],
+    ["python", "gen_showcase.py"],
+    ["python", "changelog.py"],
     ["python", "export_csv.py"],
     ["python", "make_report.py"],
 ]

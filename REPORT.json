@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T22:22:06",
+ "generated_at": "2026-09-22T23:00:38",
  "status": "GREEN",
  "sources_read": 4,
  "gate": {
@@ -36,9 +36,9 @@
     "token_cost_proxy": 179397,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 1.0,
-    "p50_us": 5069.8,
-    "p99_us": 11555.27,
-    "mean_us": 5806.01
+    "p50_us": 4302.1,
+    "p99_us": 8498.94,
+    "mean_us": 4368.17
    },
    "always_fast": {
     "n": 109,
@@ -46,9 +46,9 @@
     "token_cost_proxy": 0,
     "false_instant_rate": 1.0,
     "instant_miss_rate": 0.0,
-    "p50_us": 39.6,
-    "p99_us": 136.48,
-    "mean_us": 42.26
+    "p50_us": 60.9,
+    "p99_us": 166.62,
+    "mean_us": 67.38
    },
    "gated": {
     "n": 109,
@@ -56,9 +56,9 @@
     "token_cost_proxy": 80333,
     "false_instant_rate": 1.0,
     "instant_miss_rate": 0.8475,
-    "p50_us": 871.0,
-    "p99_us": 8995.38,
-    "mean_us": 2780.19
+    "p50_us": 519.3,
+    "p99_us": 6951.34,
+    "mean_us": 2386.17
    },
    "gated_lr": {
     "n": 109,
@@ -66,37 +66,37 @@
     "token_cost_proxy": 119964,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 0.3729,
-    "p50_us": 4422.7,
-    "p99_us": 9260.16,
-    "mean_us": 3784.27
+    "p50_us": 3539.9,
+    "p99_us": 7494.74,
+    "mean_us": 3377.9
    }
   },
   "verdict": {
    "gate_saves_latency": true,
    "gate_saves_tokens": true,
-   "latency_savings_pct": 82.8,
+   "latency_savings_pct": 87.9,
    "token_savings_pct": 55.2,
    "false_instant_rate_gated": 1.0,
    "false_instant_rate_gated_lr": 0.0,
    "false_instant_rate_always_fast": 1.0,
    "quality_ok": true,
-   "summary": "gate: 82.8% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0"
+   "summary": "gate: 87.9% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0"
   }
  },
  "wasm": {
   "medians": {
-   "importheavy_vs_js_pkg": 0.33502577845909365,
-   "importheavy_vs_js_alu": 0.06468378467354466,
-   "freestanding_vs_js_alu": 0.3686474351882583
+   "importheavy_vs_js_pkg": 0.39886140415454546,
+   "importheavy_vs_js_alu": 0.0676411502664875,
+   "freestanding_vs_js_alu": 0.34012736193337945
   },
-  "statement": "import-heavy package WASM is 2.98x SLOWER than its own JS (median 0.34x) — env host-import overhead dominates; 0-import freestanding WASM is 0.37x vs JS ALU."
+  "statement": "import-heavy package WASM is 2.51x SLOWER than its own JS (median 0.40x) — env host-import overhead dominates; 0-import freestanding WASM is 0.34x vs JS ALU."
  },
  "wasm_batch": {
   "median_speedup_per_n": {
-   "256": 0.7058823529411765,
-   "4096": 1.4519230769230769,
-   "65536": 1.0678941311852703,
-   "1000000": 1.0248693548185934
+   "256": 0.8,
+   "4096": 2.1796875,
+   "65536": 1.0790626368812966,
+   "1000000": 1.087681233408209
   },
   "crossover_n": 4096,
   "advantageous": true,
@@ -149,6 +149,16 @@
    "ok": true
   },
   {
+   "name": "gen_showcase.py",
+   "exit": 0,
+   "ok": true
+  },
+  {
+   "name": "changelog.py",
+   "exit": 0,
+   "ok": true
+  },
+  {
    "name": "wasm_bench.js",
    "exit": 0,
    "ok": true
@@ -164,48 +174,6 @@
   "WASM batch: preferrer batch (N>=4096) — scalar ~0.3x, batch ~1-2x vs JS"
  ],
  "changelog": [
-  {
-   "generated_at": "2026-09-22T08:39:45",
-   "delta": "latency_savings_pct: 43.8->45.3; wasm_median_js_pkg: 0.3781->0.3714; wasm_median_js_alu: 0.08216->0.07974; wasm_median_freestanding: 0.352->0.3498",
-   "status": "GREEN",
-   "tests_ok": 8,
-   "tests_total": 8,
-   "latency_savings_pct": 45.3,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.3714074990454874,
-   "wasm_median_js_alu": 0.07974252829432088,
-   "wasm_median_freestanding": 0.3497879757127205,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-22T16:41:23",
-   "delta": "latency_savings_pct: 45.3->45.4; wasm_median_js_pkg: 0.3714->0.4121; wasm_median_js_alu: 0.07974->0.08847; wasm_median_freestanding: 0.3498->0.2969",
-   "status": "GREEN",
-   "tests_ok": 8,
-   "tests_total": 8,
-   "latency_savings_pct": 45.4,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.4121080049039896,
-   "wasm_median_js_alu": 0.08846500902224834,
-   "wasm_median_freestanding": 0.29692270349128747,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-22T17:10:19",
-   "delta": "latency_savings_pct: 45.4->55.9; wasm_median_js_pkg: 0.4121->0.3722; wasm_median_js_alu: 0.08847->0.0572; wasm_median_freestanding: 0.2969->0.3015",
-   "status": "GREEN",
-   "tests_ok": 8,
-   "tests_total": 8,
-   "latency_savings_pct": 55.9,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.3721891042560518,
-   "wasm_median_js_alu": 0.057198453114629885,
-   "wasm_median_freestanding": 0.30145242989931054,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
   {
    "generated_at": "2026-09-22T17:14:29",
    "delta": "latency_savings_pct: 55.9->37.9; wasm_median_js_pkg: 0.3722->0.3263; wasm_median_js_alu: 0.0572->0.07357; wasm_median_freestanding: 0.3015->0.3208",
@@ -441,6 +409,48 @@
    "wasm_median_js_pkg": 0.33502577845909365,
    "wasm_median_js_alu": 0.06468378467354466,
    "wasm_median_freestanding": 0.3686474351882583,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-22T22:48:25",
+   "delta": "status: GREEN->RED; tests_ok: 11->12; latency_savings_pct: 82.8->48.4; wasm_median_js_pkg: 0.335->0.6397; wasm_median_js_alu: 0.06468->0.07187; wasm_median_freestanding: 0.3686->0.2951",
+   "status": "RED",
+   "tests_ok": 12,
+   "tests_total": 13,
+   "latency_savings_pct": 48.4,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.6396587987645994,
+   "wasm_median_js_alu": 0.07186683094421442,
+   "wasm_median_freestanding": 0.2950506112153755,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-22T22:56:59",
+   "delta": "status: RED->GREEN; tests_ok: 12->13; latency_savings_pct: 48.4->85.7; wasm_median_js_pkg: 0.6397->0.4365; wasm_median_js_alu: 0.07187->0.08964; wasm_median_freestanding: 0.2951->0.3991",
+   "status": "GREEN",
+   "tests_ok": 13,
+   "tests_total": 13,
+   "latency_savings_pct": 85.7,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.43647902896763413,
+   "wasm_median_js_alu": 0.08964328284498313,
+   "wasm_median_freestanding": 0.3991092356903288,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-22T23:00:38",
+   "delta": "latency_savings_pct: 85.7->87.9; wasm_median_js_pkg: 0.4365->0.3989; wasm_median_js_alu: 0.08964->0.06764; wasm_median_freestanding: 0.3991->0.3401",
+   "status": "GREEN",
+   "tests_ok": 13,
+   "tests_total": 13,
+   "latency_savings_pct": 87.9,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.39886140415454546,
+   "wasm_median_js_alu": 0.0676411502664875,
+   "wasm_median_freestanding": 0.34012736193337945,
    "wasm_batch_crossover_n": 4096,
    "wasm_batch_advantageous": true
   }
