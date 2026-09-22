@@ -1,5 +1,7 @@
 # frankenspear — Intuition Instant Layer
 
+![CI](https://github.com/bahira/frankenspear/actions/workflows/ci/badge.svg)
+
 Routeur neuro-symbolique : noyau d'attribution instant/slow d'un prompt,
 champions closed-form + SLM (numpy pur) + gate logistique, kernels WASM reels.
 
