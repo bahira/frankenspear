@@ -1,6 +1,6 @@
 # REPORT
 
-- genere: 2026-09-23T01:15:01
+- genere: 2026-09-23T01:31:54
 - statut GLOBAL: GREEN
 - sources JSON lus: 4/4
 
@@ -17,38 +17,38 @@
 
 | scenario | p50_us | p99_us | mean_us | full_rate | token_cost |
 |---|---|---|---|---|---|
-| always_full | 1.268e+04 | 7.215e+04 | 1.736e+04 | 1 | 179397 |
-| always_fast | 69.2 | 563.2 | 95.62 | 0 | 0 |
-| gated | 1034 | 1.236e+04 | 3251 | 0.4587 | 80333 |
-| gated_lr | 8935 | 4.302e+04 | 9042 | 0.6606 | 119964 |
+| always_full | 7691 | 1.67e+04 | 8170 | 1 | 179397 |
+| always_fast | 45.6 | 143.6 | 60.63 | 0 | 0 |
+| gated | 869.5 | 6936 | 2359 | 0.4587 | 80333 |
+| gated_lr | 4002 | 1.061e+04 | 4026 | 0.6606 | 119964 |
 
-- savings: latence 91.8% / tokens 55.2% vs always_full
+- savings: latence 88.7% / tokens 55.2% vs always_full
 
 ## WASM (median speedups)
 
 | ratio | median |
 |---|---|
-| importheavy_vs_js_pkg | 0.4476 |
-| importheavy_vs_js_alu | 0.1067 |
-| freestanding_vs_js_alu | 0.3347 |
+| importheavy_vs_js_pkg | 0.3581 |
+| importheavy_vs_js_alu | 0.08839 |
+| freestanding_vs_js_alu | 0.3029 |
 
-- import-heavy package WASM is 2.23x SLOWER than its own JS (median 0.45x) — env host-import overhead dominates; 0-import freestanding WASM is 0.33x vs JS ALU.
+- import-heavy package WASM is 2.79x SLOWER than its own JS (median 0.36x) — env host-import overhead dominates; 0-import freestanding WASM is 0.30x vs JS ALU.
 
 ## WASM batch (median speedup js/wasm per N)
 
 | N | speedup |
 |---|---|
-| 256 | 0.5882 |
-| 4096 | 1.522 |
-| 65536 | 1.038 |
-| 1000000 | 1.472 |
+| 256 | 0.6 |
+| 4096 | 1.318 |
+| 65536 | 1.034 |
+| 1000000 | 1.062 |
 
 - crossover N=4096 | batch WASM beats JS (>1.05x median) from N=4096 — boundary cost amortized.
 
 ## Multi-conf / verdict negatif
 
 - quality_ok: True
-- gate: 91.8% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0
+- gate: 88.7% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0
 
 ## SLM weights (shapes)
 
@@ -95,9 +95,9 @@
 - `test_discover.py` exit=0 first='OK 89 ids package' last='OK 61 kernels, all max_rel_err < 0.001'
 - `test_showcase.js` exit=0 first='json ok 21 kernels; W1 48x32' last='ALL GREEN'
 - `cov.py` exit=0 first='OK test_champions_match_ref' last='cov ok'
-- `gen_showcase.py` exit=0 first='bench block regenere (1833 octets)' last='bench block regenere (1833 octets)'
+- `gen_showcase.py` exit=0 first='bench block regenere (1836 octets)' last='bench block regenere (1836 octets)'
 - `changelog.py` exit=0 first='CHANGELOG.md (0 lignes)' last='CHANGELOG.md (0 lignes)'
-- `demo_agent.py` exit=0 first='instant p=0.648 conf=0.307 cx=0.425 1123.1us  salut qui es-tu aide' last='stats instant=3 slow=0'
+- `demo_agent.py` exit=0 first='instant p=0.648 conf=0.307 cx=0.425 463.1us  salut qui es-tu aide' last='stats instant=3 slow=0'
 - `wasm_bench.js` exit=0 first='wasm_bench  n=100000 samples=100 warmup=5 passes=2  node=v24.13.0' last='report â†’ wasm_bench_report.json | checksum 1269556570.5185847'
 - `wasm_batch_bench.js` exit=0 first='wasm_batch_bench  passes=2  node=v24.13.0' last='report â†’ wasm_batch_report.json | checksum 8185846.975385929'
 
@@ -108,9 +108,6 @@
 
 ## Changelog
 
-- 2026-09-22T18:46:02 | GREEN | tests_ok=9/9 | delta: latency_savings_pct: 58.2->52.5; wasm_median_js_pkg: 0.4443->0.4019; wasm_median_js_alu: 0.09052->0.0705; wasm_median_freestanding: 0.3128->0.287
-- 2026-09-22T21:18:25 | GREEN | tests_ok=9/9 | delta: latency_savings_pct: 52.5->57.2; wasm_median_js_pkg: 0.4019->0.3867; wasm_median_js_alu: 0.0705->0.07445; wasm_median_freestanding: 0.287->0.3729
-- 2026-09-22T21:46:26 | GREEN | tests_ok=11/11 | delta: tests_ok: 9->11; latency_savings_pct: 57.2->58.3; wasm_median_js_pkg: 0.3867->0.2865; wasm_median_js_alu: 0.07445->0.04263; wasm_median_freestanding: 0.3729->0.2473
 - 2026-09-22T21:54:58 | RED | tests_ok=7/11 | delta: status: GREEN->RED; tests_ok: 11->7; latency_savings_pct: 58.3->55.6; wasm_median_js_pkg: 0.2865->0.3279; wasm_median_js_alu: 0.04263->0.05761; wasm_median_freestanding: 0.2473->0.3529
 - 2026-09-22T22:10:27 | RED | tests_ok=8/11 | delta: tests_ok: 7->8; latency_savings_pct: 55.6->38.2; wasm_median_js_pkg: 0.3279->0.3253; wasm_median_js_alu: 0.05761->0.04072; wasm_median_freestanding: 0.3529->0.3523
 - 2026-09-22T22:22:06 | GREEN | tests_ok=11/11 | delta: status: RED->GREEN; tests_ok: 8->11; latency_savings_pct: 38.2->82.8; wasm_median_js_pkg: 0.3253->0.335; wasm_median_js_alu: 0.04072->0.06468; wasm_median_freestanding: 0.3523->0.3686
@@ -128,3 +125,6 @@
 - 2026-09-23T01:04:39 | RED | tests_ok=13/15 | delta: wasm_median_js_pkg: 0.4176->0.3832; wasm_median_js_alu: 0.07536->0.07715; wasm_median_freestanding: 0.2468->0.4241
 - 2026-09-23T01:13:10 | RED | tests_ok=14/15 | delta: tests_ok: 13->14; latency_savings_pct: 92.7->86; wasm_median_js_pkg: 0.3832->0.4279; wasm_median_js_alu: 0.07715->0.04988; wasm_median_freestanding: 0.4241->0.2877; wasm_batch_crossover_n: 4096->65536
 - 2026-09-23T01:15:01 | GREEN | tests_ok=15/15 | delta: status: RED->GREEN; tests_ok: 14->15; latency_savings_pct: 86->91.8; wasm_median_js_pkg: 0.4279->0.4476; wasm_median_js_alu: 0.04988->0.1067; wasm_median_freestanding: 0.2877->0.3347; wasm_batch_crossover_n: 65536->4096
+- 2026-09-23T01:17:29 | GREEN | tests_ok=15/15 | delta: latency_savings_pct: 91.8->55.6; wasm_median_js_pkg: 0.4476->0.3952; wasm_median_js_alu: 0.1067->0.06893; wasm_median_freestanding: 0.3347->0.2461
+- 2026-09-23T01:23:07 | RED | tests_ok=12/15 | delta: status: GREEN->RED; tests_ok: 15->12; latency_savings_pct: 55.6->49.3; wasm_median_js_pkg: 0.3952->0.5257; wasm_median_js_alu: 0.06893->0.09304; wasm_median_freestanding: 0.2461->0.2818
+- 2026-09-23T01:31:54 | GREEN | tests_ok=15/15 | delta: status: RED->GREEN; tests_ok: 12->15; latency_savings_pct: 49.3->88.7; wasm_median_js_pkg: 0.5257->0.3581; wasm_median_js_alu: 0.09304->0.08839; wasm_median_freestanding: 0.2818->0.3029
