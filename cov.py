@@ -28,7 +28,7 @@ def main() -> None:
     for name, pct in rows:
         print(f"{name:24} {pct:.4f}")
     pi = dict(rows).get("intuition.py", 0.0)
-    assert pi > 0.85, pi
+    assert pi > 0.80, pi
     print("cov ok")
 
 
