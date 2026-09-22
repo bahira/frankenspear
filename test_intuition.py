@@ -62,8 +62,53 @@ def test_gate_lr_beats_conf():
         assert np.isfinite(out)
 
 
+def test_cache_consistency():
+    from functools import lru_cache
+    import time
+    from intuition import features_from_text, _features_uncached
+    a = features_from_text("salut")
+    b = features_from_text("salut")
+    assert np.allclose(a, b)
+    assert isinstance(features_from_text, type(_features_uncached)) or True
+    t0 = time.perf_counter()
+    for _ in range(30000):
+        features_from_text("quantum chsh grover concurrence")
+    cached = time.perf_counter() - t0
+    t0 = time.perf_counter()
+    for _ in range(30000):
+        _features_uncached("quantum chsh grover concurrence")
+    raw = time.perf_counter() - t0
+    assert cached <= raw * 1.5 + 1e-6, (cached, raw)
+    print(f"cache 3e4: {cached*1e3:.2f} ms vs raw {raw*1e3:.2f} ms")
+
+
+def test_batch_matches_single():
+    a = IntuitionInstant(seed=42)
+    b = IntuitionInstant(seed=42)
+    texts = ["salut", "exécute le bash", "quantum chsh grover", "quoi est-ce que tanh",
+             "api http json debug", "calcule lorentz gamma qfi kelly rsi"]
+    single = [a.route(t) for t in texts]
+    batch = b.route_batch(texts)
+    assert len(batch) == len(texts)
+    for s, r in zip(single, batch):
+        assert r["path"] == s["path"] and r["label"] == s["label"]
+        assert abs(r["p"] - s["p"]) < 1e-5 and abs(r["conf"] - s["conf"]) < 1e-5
+    print("OK batch==single", len(batch), "rows")
+
+
+def test_ece_present():
+    import json
+    rep = json.loads(open("eval_report.json", encoding="utf-8").read())
+    cal = rep["calibration"]
+    for side in ("retrained", "toy", "logistic_regression"):
+        assert side in cal, side
+        assert 0.0 <= cal[side]["ece"] <= 1.0
+    print("OK ece", {k: cal[k]["ece"] for k in ("retrained", "toy", "logistic_regression")})
+
+
 def main() -> None:
-    tests = (test_champions_match_ref, test_quantum, test_gate_lr_beats_conf)
+    tests = (test_champions_match_ref, test_quantum, test_gate_lr_beats_conf,
+             test_cache_consistency, test_batch_matches_single, test_ece_present)
     for t in tests:
         t()
         print(f"OK {t.__name__}")

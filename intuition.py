@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from functools import lru_cache
 
 import numpy as np
 
@@ -178,7 +179,12 @@ QUESTION_WORDS = ("quoi", "what", "comment", "how", "pourquoi", "why", "combien"
 TECH_WORDS = ("api", "http", "json", "sql", "git", "docker", "npm", "pip", "debug")
 
 
+@lru_cache(maxsize=4096)
 def features_from_text(text: str) -> np.ndarray:
+    return _features_uncached(text)
+
+
+def _features_uncached(text: str) -> np.ndarray:
     t = (text or "").lower()
     words = t.split()
     n = max(len(words), 1)
@@ -355,6 +361,25 @@ class IntuitionInstant:
         self.stats[path] += 1
         return dict(label=label, path=path, p=p, conf=conf,
                     complexity=float(silu_alu(p)))
+
+    def route_batch(self, texts):
+        X = np.array([features_from_text(t) for t in texts], np.float32)
+        P = self.policy.predict_proba(self.emb.transform(X))[:, 0]
+        out = []
+        for t, p in zip(texts, P):
+            f = np.asarray(features_from_text(t), np.float64)
+            conf = float(gaussian_cdf_fast(4.0 * abs(float(p) - 0.5) - 1.0))
+            label = int(p >= 0.5)
+            if self.gate == "lr":
+                z = float(((f - self.lr.mu) / self.lr.sd) @ self.lr.w + self.lr.b)
+                go = sigmoid_alu(max(-30.0, min(30.0, z))) >= 0.5
+            else:
+                go = label == 0 and conf >= self.INSTANT
+            path = "instant" if go else "slow"
+            self.stats[path] += 1
+            out.append(dict(label=label, path=path, p=float(p), conf=conf,
+                           complexity=float(silu_alu(p))))
+        return out
 
     def call_champion(self, name: str, x):
         """Symbolic dispatch — instant closed-form evaluation."""

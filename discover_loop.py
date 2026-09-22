@@ -18,6 +18,11 @@ def _node_pkg():
     return json.loads(out.stdout.strip())
 
 
+def all_ids():
+    """Full kernelId list exposed by the spear-kernels package (89 entries)."""
+    return _node_pkg()["ids"]
+
+
 def _balance(s):
     # ponytail: package emits off-by-one parens on some js fields; pad/truncate to match
     o, c = s.count("("), s.count(")")
@@ -94,7 +99,10 @@ def discover():
         jsf = slot.get("js")
         if jsf:
             head = jsf.split("=>", 1)[0]
-            nargs = head.count(",") + 1 if "=>" in jsf else 1
+            try:
+                nargs = fn.__code__.co_argcount
+            except Exception:
+                nargs = head.count(",") + 1 if "=>" in jsf else 1
             samples = SAMPLES2 if nargs >= 2 else SAMPLES1
             errs = []
             for s in samples:

@@ -23,6 +23,15 @@ def _js(formula, args):
     return _js_eval(formula, args)
 
 
+def test_ids_count():
+    from discover_loop import all_ids
+    ids = all_ids()
+    assert len(ids) == 89, len(ids)
+    for kid in ("silu", "mish", "logsumexp2"):
+        assert kid in ids
+    print("OK 89 ids package")
+
+
 def test_discovered_kernels():
     from champions_extra import EXTRA
     res = {r["id"]: r for r in discover()}
@@ -30,7 +39,6 @@ def test_discovered_kernels():
     for kid, fn in EXTRA.items():
         pts = PTS.get(kid) or PTS2.get(kid)
         assert pts, kid
-        jsf = None
         pkg = json.loads(subprocess.run(
             ["node", "-e", "const p=require('spear-kernels');console.log(JSON.stringify(p.kernels));"],
             capture_output=True, text=True, encoding="utf-8",
@@ -45,8 +53,13 @@ def test_discovered_kernels():
         mre = max(errs)
         assert mre < TOL, f"{kid}: max_rel_err={mre}"
         assert res[kid]["added"] is True
-    print("OK", len(EXTRA), "kernels, all max_rel_err <", TOL)
+    n = sum(1 for r in res.values()
+            if r["added"] and r["max_rel_err_vs_js"] is not None
+            and r["max_rel_err_vs_js"] < TOL)
+    assert n >= 8, n
+    print("OK", n, "kernels, all max_rel_err <", TOL)
 
 
 if __name__ == "__main__":
+    test_ids_count()
     test_discovered_kernels()

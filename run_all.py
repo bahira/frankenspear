@@ -13,10 +13,12 @@ CMDS = [
     ["python", "e2e_bench.py"],
     ["python", "test_slow_path.py"],
     ["python", "test_intuition.py"],
+    ["python", "test_reports.py"],
     ["python", "test_discover.py"],
     ["node", "wasm_bench.js"],
     ["node", "wasm_batch_bench.js"],
     ["node", "test_showcase.js"],
+    ["python", "export_csv.py"],
     ["python", "make_report.py"],
 ]
 

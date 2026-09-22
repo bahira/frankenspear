@@ -1,0 +1,8 @@
+{
+  "name": "frankenspear",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "spear-kernels": "1.10.3"
+  }
+}

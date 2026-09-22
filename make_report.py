@@ -9,6 +9,7 @@ TESTS = [
     ("multi_conf.py", ["python", "multi_conf.py"]),
     ("test_slow_path.py", ["python", "test_slow_path.py"]),
     ("test_intuition.py", ["python", "test_intuition.py"]),
+    ("test_reports.py", ["python", "test_reports.py"]),
     ("test_discover.py", ["python", "test_discover.py"]),
     ("test_showcase.js", ["node", "test_showcase.js"]),
     ("wasm_bench.js", ["node", "wasm_bench.js"]),

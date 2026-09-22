@@ -294,7 +294,8 @@ def run() -> dict:
         },
         "threshold_sweep": {"retrained": sweep(yte, conf_r), "toy": sweep(yte, conf_t)},
         "calibration": {"retrained": calibration(yte, p_r, conf_r),
-                        "toy": calibration(yte, p_t, conf_t)},
+                        "toy": calibration(yte, p_t, conf_t),
+                        "logistic_regression": calibration(yte, conf_lr, conf_lr)},
         "best_thresholds": {
             "retrained": best_thresholds(sweep(yte, conf_r)),
             "toy": best_thresholds(sweep(yte, conf_t)),
@@ -317,9 +318,10 @@ def self_check(rep: dict, y, tr, te) -> None:
         for k in req:
             assert k in m, f"baseline {name} missing {k}"
     assert len(rep["threshold_sweep"]["retrained"]) >= 10, "sweep too short"
-    for side in ("retrained", "toy"):
+    for side in ("retrained", "toy", "logistic_regression"):
         assert rep["calibration"][side]["ece"] >= 0.0, "bad ECE"
         assert len(rep["calibration"][side]["bins"]) >= 5, "too few calib bins"
+    for side in ("retrained", "toy"):
         assert "max_f1" in rep["best_thresholds"][side], "missing best threshold"
 
 
