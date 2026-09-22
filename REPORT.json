@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T17:58:01",
+ "generated_at": "2026-09-22T18:07:44",
  "status": "GREEN",
  "sources_read": 4,
  "gate": {
@@ -36,9 +36,9 @@
     "token_cost_proxy": 179397,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 1.0,
-    "p50_us": 6850.4,
-    "p99_us": 40400.35,
-    "mean_us": 9142.05
+    "p50_us": 5345.6,
+    "p99_us": 53272.87,
+    "mean_us": 6696.08
    },
    "always_fast": {
     "n": 109,
@@ -46,9 +46,9 @@
     "token_cost_proxy": 0,
     "false_instant_rate": 1.0,
     "instant_miss_rate": 0.0,
-    "p50_us": 81.6,
-    "p99_us": 253.01,
-    "mean_us": 81.35
+    "p50_us": 76.0,
+    "p99_us": 183.35,
+    "mean_us": 66.81
    },
    "gated": {
     "n": 109,
@@ -56,9 +56,9 @@
     "token_cost_proxy": 80333,
     "false_instant_rate": 1.0,
     "instant_miss_rate": 0.8475,
-    "p50_us": 998.3,
-    "p99_us": 17547.06,
-    "mean_us": 3981.98
+    "p50_us": 741.6,
+    "p99_us": 8394.17,
+    "mean_us": 2799.06
    },
    "gated_lr": {
     "n": 109,
@@ -66,37 +66,37 @@
     "token_cost_proxy": 119964,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 0.3729,
-    "p50_us": 4720.9,
-    "p99_us": 12620.57,
-    "mean_us": 4261.86
+    "p50_us": 3405.5,
+    "p99_us": 7774.47,
+    "mean_us": 3240.22
    }
   },
   "verdict": {
    "gate_saves_latency": true,
    "gate_saves_tokens": true,
-   "latency_savings_pct": 56.4,
+   "latency_savings_pct": 58.2,
    "token_savings_pct": 55.2,
    "false_instant_rate_gated": 1.0,
    "false_instant_rate_gated_lr": 0.0,
    "false_instant_rate_always_fast": 1.0,
    "quality_ok": true,
-   "summary": "gate: 56.4% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0"
+   "summary": "gate: 58.2% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0"
   }
  },
  "wasm": {
   "medians": {
-   "importheavy_vs_js_pkg": 0.37538062814407236,
-   "importheavy_vs_js_alu": 0.06111199955690432,
-   "freestanding_vs_js_alu": 0.20551463812209214
+   "importheavy_vs_js_pkg": 0.4442801822457049,
+   "importheavy_vs_js_alu": 0.0905233288031319,
+   "freestanding_vs_js_alu": 0.3127963752633617
   },
-  "statement": "import-heavy package WASM is 2.66x SLOWER than its own JS (median 0.38x) — env host-import overhead dominates; 0-import freestanding WASM is 0.21x vs JS ALU."
+  "statement": "import-heavy package WASM is 2.25x SLOWER than its own JS (median 0.44x) — env host-import overhead dominates; 0-import freestanding WASM is 0.31x vs JS ALU."
  },
  "wasm_batch": {
   "median_speedup_per_n": {
-   "256": 0.7857142857142857,
-   "4096": 2.6262626262626263,
-   "65536": 0.9502398081534772,
-   "1000000": 1.095142702800036
+   "256": 0.44,
+   "4096": 1.2371134020618557,
+   "65536": 1.0491383722914178,
+   "1000000": 1.1029447014017737
   },
   "crossover_n": 4096,
   "advantageous": true,
@@ -154,20 +154,6 @@
   "WASM batch: preferrer batch (N>=4096) — scalar ~0.3x, batch ~1-2x vs JS"
  ],
  "changelog": [
-  {
-   "generated_at": "2026-09-22T08:18:30",
-   "delta": "latency_savings_pct: 55.4->46.9; wasm_median_js_pkg: 0.3015->0.3614; wasm_median_js_alu: 0.06294->0.05956; wasm_median_freestanding: 0.3586->0.2536",
-   "status": "GREEN",
-   "tests_ok": 4,
-   "tests_total": 4,
-   "latency_savings_pct": 46.9,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.36137086220841175,
-   "wasm_median_js_alu": 0.05955908593100523,
-   "wasm_median_freestanding": 0.2535770651253113,
-   "wasm_batch_crossover_n": null,
-   "wasm_batch_advantageous": true
-  },
   {
    "generated_at": "2026-09-22T08:22:27",
    "delta": "tests_ok: 4->5; latency_savings_pct: 46.9->48.9; wasm_median_js_pkg: 0.3614->0.3517; wasm_median_js_alu: 0.05956->0.07532; wasm_median_freestanding: 0.2536->0.4237",
@@ -431,6 +417,20 @@
    "wasm_median_js_pkg": 0.37538062814407236,
    "wasm_median_js_alu": 0.06111199955690432,
    "wasm_median_freestanding": 0.20551463812209214,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-22T18:07:44",
+   "delta": "latency_savings_pct: 56.4->58.2; wasm_median_js_pkg: 0.3754->0.4443; wasm_median_js_alu: 0.06111->0.09052; wasm_median_freestanding: 0.2055->0.3128",
+   "status": "GREEN",
+   "tests_ok": 9,
+   "tests_total": 9,
+   "latency_savings_pct": 58.2,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.4442801822457049,
+   "wasm_median_js_alu": 0.0905233288031319,
+   "wasm_median_freestanding": 0.3127963752633617,
    "wasm_batch_crossover_n": 4096,
    "wasm_batch_advantageous": true
   }
