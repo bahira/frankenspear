@@ -1,6 +1,6 @@
 {
   "meta": {
-    "date": "2026-09-22T16:07:21.036Z",
+    "date": "2026-09-22T16:45:30.983Z",
     "node": "v24.13.0",
     "platform": "win32",
     "arch": "x64",
@@ -23,66 +23,66 @@
       "formula_freestanding": "silu_fast_relu ALU (intuition.py) 1.016356*relu(x)-0.15849",
       "modes": {
         "js_alu": {
-          "p50_ns": 13.568,
-          "p99_ns": 23.402,
-          "mean_ns": 13.823879999999992,
-          "min_ns": 10.832,
-          "max_ns": 23.46,
+          "p50_ns": 16.536,
+          "p99_ns": 54.809,
+          "mean_ns": 17.65209,
+          "min_ns": 11.947,
+          "max_ns": 84.535,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 13774422.05059849,
           "passes_p50_ns": [
-            13.568,
-            15.05
+            16.536,
+            18.136
           ]
         },
         "js_pkg": {
-          "p50_ns": 74.373,
-          "p99_ns": 169.754,
-          "mean_ns": 81.44716000000003,
-          "min_ns": 48.262,
-          "max_ns": 385.02,
+          "p50_ns": 94.364,
+          "p99_ns": 357.78,
+          "mean_ns": 106.39130000000003,
+          "min_ns": 56.034,
+          "max_ns": 455.235,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 13780525.60367554,
           "passes_p50_ns": [
-            74.373,
-            80.681
+            94.364,
+            123.626
           ]
         },
         "freestanding": {
-          "p50_ns": 36.521,
-          "p99_ns": 63.616,
-          "mean_ns": 35.01061000000001,
-          "min_ns": 17.365,
-          "max_ns": 68.907,
+          "p50_ns": 43.194,
+          "p99_ns": 67.256,
+          "mean_ns": 42.85728999999999,
+          "min_ns": 20.381,
+          "max_ns": 106.597,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 13774422.05059849,
           "passes_p50_ns": [
-            36.521,
-            37.344
+            43.194,
+            51.016
           ]
         },
         "importheavy": {
-          "p50_ns": 75.993,
-          "p99_ns": 139.753,
-          "mean_ns": 81.54186,
-          "min_ns": 43.192,
-          "max_ns": 365.308,
+          "p50_ns": 97.638,
+          "p99_ns": 204.384,
+          "mean_ns": 101.62583999999998,
+          "min_ns": 53.833,
+          "max_ns": 233.715,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 13780525.60367554,
           "passes_p50_ns": [
-            75.993,
-            76.045
+            97.638,
+            99.75
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.3715122806056789,
-        "importheavy_vs_js_pkg": 0.9786822470490705,
-        "importheavy_vs_js_alu": 0.17854276051741608
+        "freestanding_vs_js_alu": 0.382830948742881,
+        "importheavy_vs_js_pkg": 0.9664679735348942,
+        "importheavy_vs_js_alu": 0.16936029005100472
       }
     },
     "gelu": {
@@ -93,66 +93,66 @@
       "formula_freestanding": "gelu_fast_relu ALU 1.010719*relu(x)-0.057684",
       "modes": {
         "js_alu": {
-          "p50_ns": 11.617,
-          "p99_ns": 24.903,
-          "mean_ns": 12.855249999999996,
-          "min_ns": 10.304,
-          "max_ns": 26.811,
+          "p50_ns": 16.245,
+          "p99_ns": 23.063,
+          "mean_ns": 15.79299,
+          "min_ns": 11.941,
+          "max_ns": 27.065,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 14747258.358323773,
           "passes_p50_ns": [
-            11.617,
-            13.93
+            16.245,
+            16.716
           ]
         },
         "js_pkg": {
-          "p50_ns": 54.832,
-          "p99_ns": 143.846,
-          "mean_ns": 61.854979999999976,
-          "min_ns": 40.149,
-          "max_ns": 146.338,
+          "p50_ns": 71.986,
+          "p99_ns": 114.463,
+          "mean_ns": 74.72151000000002,
+          "min_ns": 48.313,
+          "max_ns": 168.471,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 14754152.643877441,
           "passes_p50_ns": [
-            54.832,
-            65.936
+            71.986,
+            72.354
           ]
         },
         "freestanding": {
-          "p50_ns": 31.774,
-          "p99_ns": 59.892,
-          "mean_ns": 33.947770000000006,
-          "min_ns": 16.589,
-          "max_ns": 117.403,
+          "p50_ns": 40.864,
+          "p99_ns": 99.326,
+          "mean_ns": 42.43465000000001,
+          "min_ns": 20.383,
+          "max_ns": 116.453,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 14747258.358323773,
           "passes_p50_ns": [
-            31.774,
-            35.362
+            40.864,
+            43.881
           ]
         },
         "importheavy": {
-          "p50_ns": 164.184,
-          "p99_ns": 245.268,
-          "mean_ns": 169.70846,
-          "min_ns": 109.624,
-          "max_ns": 249.79,
+          "p50_ns": 206.06,
+          "p99_ns": 348.201,
+          "mean_ns": 215.23033000000015,
+          "min_ns": 162.067,
+          "max_ns": 392.81,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 14754152.643877441,
           "passes_p50_ns": [
-            164.184,
-            229.061
+            206.06,
+            214.75
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.365613394599358,
-        "importheavy_vs_js_pkg": 0.3339667689908883,
-        "importheavy_vs_js_alu": 0.07075598109438191
+        "freestanding_vs_js_alu": 0.39753817541111985,
+        "importheavy_vs_js_pkg": 0.3493448510142677,
+        "importheavy_vs_js_alu": 0.07883626128312142
       }
     },
     "gaussian_cdf": {
@@ -163,66 +163,66 @@
       "formula_freestanding": "gaussian_cdf_fast ALU 0.625605*x/(0.912761+|x|)+0.5",
       "modes": {
         "js_alu": {
-          "p50_ns": 7.099,
-          "p99_ns": 15.527,
-          "mean_ns": 6.821639999999998,
-          "min_ns": 3.164,
-          "max_ns": 20.565,
+          "p50_ns": 4.428,
+          "p99_ns": 11.993,
+          "mean_ns": 5.715730000000002,
+          "min_ns": 3.505,
+          "max_ns": 16.639,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5099795.585333037,
           "passes_p50_ns": [
-            7.099,
-            7.68
+            4.428,
+            7.908
           ]
         },
         "js_pkg": {
-          "p50_ns": 97.817,
-          "p99_ns": 231.741,
-          "mean_ns": 103.30355,
-          "min_ns": 45.658,
-          "max_ns": 295.648,
+          "p50_ns": 91.097,
+          "p99_ns": 186.521,
+          "mean_ns": 91.31043000000004,
+          "min_ns": 47.624,
+          "max_ns": 264.967,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5099960.333735916,
           "passes_p50_ns": [
-            97.817,
-            112.053
+            91.097,
+            95.482
           ]
         },
         "freestanding": {
-          "p50_ns": 48.654,
-          "p99_ns": 115.034,
-          "mean_ns": 55.02826999999998,
-          "min_ns": 11.718,
-          "max_ns": 273.945,
+          "p50_ns": 26.262,
+          "p99_ns": 59.412,
+          "mean_ns": 30.039300000000008,
+          "min_ns": 13.325,
+          "max_ns": 60.043,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5099795.585333037,
           "passes_p50_ns": [
-            48.654,
-            63.3
+            26.262,
+            37.055
           ]
         },
         "importheavy": {
-          "p50_ns": 176.376,
-          "p99_ns": 358.702,
-          "mean_ns": 178.82348,
-          "min_ns": 93.875,
-          "max_ns": 370.782,
+          "p50_ns": 200.496,
+          "p99_ns": 332.682,
+          "mean_ns": 208.50635999999997,
+          "min_ns": 135.497,
+          "max_ns": 395.059,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5099960.333735916,
           "passes_p50_ns": [
-            176.376,
-            204.815
+            200.496,
+            211.948
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.14590783902659596,
-        "importheavy_vs_js_pkg": 0.5545935955005216,
-        "importheavy_vs_js_alu": 0.04024924025944573
+        "freestanding_vs_js_alu": 0.16860863605209048,
+        "importheavy_vs_js_pkg": 0.4543581916846221,
+        "importheavy_vs_js_alu": 0.022085228632990183
       }
     },
     "sigmoid": {
@@ -233,66 +233,66 @@
       "formula_freestanding": "sigmoid_fast ALU 0.605014*x/(1.24384+|x|)+0.5",
       "modes": {
         "js_alu": {
-          "p50_ns": 6.363,
-          "p99_ns": 8.229,
-          "mean_ns": 5.798539999999998,
-          "min_ns": 2.878,
-          "max_ns": 9.36,
+          "p50_ns": 5.557,
+          "p99_ns": 16.126,
+          "mean_ns": 6.32534,
+          "min_ns": 3.497,
+          "max_ns": 18.13,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5115351.148123527,
           "passes_p50_ns": [
-            6.363,
-            6.599
+            5.557,
+            7.517
           ]
         },
         "js_pkg": {
-          "p50_ns": 65.541,
-          "p99_ns": 108.308,
-          "mean_ns": 70.43192,
-          "min_ns": 48.138,
-          "max_ns": 113.312,
+          "p50_ns": 90.267,
+          "p99_ns": 160.349,
+          "mean_ns": 96.73794999999997,
+          "min_ns": 60.774,
+          "max_ns": 204.258,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5109453.244726207,
           "passes_p50_ns": [
-            65.541,
-            90.278
+            90.267,
+            99.603
           ]
         },
         "freestanding": {
-          "p50_ns": 17.487,
-          "p99_ns": 43.46,
-          "mean_ns": 20.968940000000003,
-          "min_ns": 10.59,
-          "max_ns": 47.606,
+          "p50_ns": 20.215,
+          "p99_ns": 94.089,
+          "mean_ns": 29.323469999999997,
+          "min_ns": 12.345,
+          "max_ns": 111.043,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5115351.148123527,
           "passes_p50_ns": [
-            17.487,
-            19.055
+            20.215,
+            37.427
           ]
         },
         "importheavy": {
-          "p50_ns": 57.693,
-          "p99_ns": 123.683,
-          "mean_ns": 63.31677000000003,
-          "min_ns": 44.523,
-          "max_ns": 137.242,
+          "p50_ns": 89.394,
+          "p99_ns": 169.237,
+          "mean_ns": 97.06062999999999,
+          "min_ns": 52.597,
+          "max_ns": 173.426,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 5109453.244726207,
           "passes_p50_ns": [
-            57.693,
-            61.608
+            89.394,
+            92.002
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.36387030365414313,
-        "importheavy_vs_js_pkg": 1.1360303676355883,
-        "importheavy_vs_js_alu": 0.11029067651188187
+        "freestanding_vs_js_alu": 0.2748948800395746,
+        "importheavy_vs_js_pkg": 1.0097657560910127,
+        "importheavy_vs_js_alu": 0.06216300870304495
       }
     },
     "tanh_sat": {
@@ -303,66 +303,66 @@
       "formula_freestanding": "tanh_pade ALU Padé[3/4] (1 div, clip ±4)",
       "modes": {
         "js_alu": {
-          "p50_ns": 6.084,
-          "p99_ns": 30.825,
-          "mean_ns": 8.179110000000003,
-          "min_ns": 5.888,
-          "max_ns": 31.515,
+          "p50_ns": 13.201,
+          "p99_ns": 25.964,
+          "mean_ns": 12.58723,
+          "min_ns": 7.306,
+          "max_ns": 27.352,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": -300063.9722582152,
           "passes_p50_ns": [
-            6.084,
-            6.104
+            13.201,
+            13.301
           ]
         },
         "js_pkg": {
-          "p50_ns": 44.442,
-          "p99_ns": 92.439,
-          "mean_ns": 53.74745,
-          "min_ns": 38.596,
-          "max_ns": 108.187,
+          "p50_ns": 72.058,
+          "p99_ns": 193.116,
+          "mean_ns": 77.76380000000003,
+          "min_ns": 48.06,
+          "max_ns": 244.724,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": -300075.5570330087,
           "passes_p50_ns": [
-            44.442,
-            45.726
+            72.058,
+            75.512
           ]
         },
         "freestanding": {
-          "p50_ns": 23.246,
-          "p99_ns": 64.74,
-          "mean_ns": 28.30902,
-          "min_ns": 15.547,
-          "max_ns": 64.786,
+          "p50_ns": 44.149,
+          "p99_ns": 72.899,
+          "mean_ns": 44.32297,
+          "min_ns": 18.261,
+          "max_ns": 73.129,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": -300063.9722582152,
           "passes_p50_ns": [
-            23.246,
-            25.699
+            44.149,
+            48.466
           ]
         },
         "importheavy": {
-          "p50_ns": 152.615,
-          "p99_ns": 196.248,
-          "mean_ns": 152.94167,
-          "min_ns": 107.382,
-          "max_ns": 200.439,
+          "p50_ns": 218.619,
+          "p99_ns": 296.07,
+          "mean_ns": 222.26488,
+          "min_ns": 175.531,
+          "max_ns": 334.92,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": -300075.5570330087,
           "passes_p50_ns": [
-            152.615,
-            158.432
+            218.619,
+            286.799
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.26172244687258023,
-        "importheavy_vs_js_pkg": 0.2912033548471644,
-        "importheavy_vs_js_alu": 0.039865019821118494
+        "freestanding_vs_js_alu": 0.2990101701057782,
+        "importheavy_vs_js_pkg": 0.3296053865400537,
+        "importheavy_vs_js_alu": 0.06038358971544102
       }
     },
     "concurrence_pure": {
@@ -371,66 +371,66 @@
       "formula_freestanding": "exact 2|ad-bc| (f64, no imports either side)",
       "modes": {
         "js_alu": {
-          "p50_ns": 3.965,
-          "p99_ns": 22.945,
-          "mean_ns": 5.067730000000002,
-          "min_ns": 3.887,
-          "max_ns": 24.517,
+          "p50_ns": 9.516,
+          "p99_ns": 15.636,
+          "mean_ns": 9.317290000000003,
+          "min_ns": 5.053,
+          "max_ns": 23.157,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 278948752.91009486,
           "passes_p50_ns": [
-            3.965,
-            3.993
+            9.516,
+            10.214
           ]
         },
         "js_pkg": {
-          "p50_ns": 3.943,
-          "p99_ns": 24.072,
-          "mean_ns": 5.1633200000000015,
-          "min_ns": 3.892,
-          "max_ns": 24.305,
+          "p50_ns": 9.76,
+          "p99_ns": 25.637,
+          "mean_ns": 10.277070000000002,
+          "min_ns": 4.768,
+          "max_ns": 26.361,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 278948752.91009486,
           "passes_p50_ns": [
-            3.943,
-            4.011
+            9.76,
+            10.574
           ]
         },
         "freestanding": {
-          "p50_ns": 19.43,
-          "p99_ns": 64.215,
-          "mean_ns": 25.41738,
-          "min_ns": 13.297,
-          "max_ns": 68.381,
+          "p50_ns": 62.582,
+          "p99_ns": 345.655,
+          "mean_ns": 79.16244000000003,
+          "min_ns": 17.368,
+          "max_ns": 367.908,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 278948752.91009486,
           "passes_p50_ns": [
-            19.43,
-            19.736
+            62.582,
+            67.251
           ]
         },
         "importheavy": {
-          "p50_ns": 15.006,
-          "p99_ns": 66.696,
-          "mean_ns": 22.986619999999995,
-          "min_ns": 13.947,
-          "max_ns": 69.823,
+          "p50_ns": 58.043,
+          "p99_ns": 89.46,
+          "mean_ns": 57.43945000000001,
+          "min_ns": 16.432,
+          "max_ns": 108.57,
           "samples": 100,
           "n_per_sample": 100000,
           "checksum": 278948752.91009486,
           "passes_p50_ns": [
-            15.006,
-            20.118
+            58.043,
+            61.487
           ]
         }
       },
       "speedups": {
-        "freestanding_vs_js_alu": 0.20406587750900668,
-        "importheavy_vs_js_pkg": 0.2627615620418499,
-        "importheavy_vs_js_alu": 0.26422764227642276
+        "freestanding_vs_js_alu": 0.15205650186954714,
+        "importheavy_vs_js_pkg": 0.16815119824957359,
+        "importheavy_vs_js_alu": 0.16394741829333426
       }
     }
   },
@@ -609,11 +609,11 @@
     }
   },
   "verdict": {
-    "median_importheavy_vs_js_pkg": 0.4442801822457049,
-    "median_importheavy_vs_js_alu": 0.0905233288031319,
-    "median_freestanding_vs_js_alu": 0.3127963752633617,
+    "median_importheavy_vs_js_pkg": 0.4018515213494449,
+    "median_importheavy_vs_js_alu": 0.07049963499308318,
+    "median_freestanding_vs_js_alu": 0.2869525250726764,
     "current_package_wasm_advantageous": false,
-    "statement": "import-heavy package WASM is 2.25x SLOWER than its own JS (median 0.44x) — env host-import overhead dominates; 0-import freestanding WASM is 0.31x vs JS ALU."
+    "statement": "import-heavy package WASM is 2.49x SLOWER than its own JS (median 0.40x) — env host-import overhead dominates; 0-import freestanding WASM is 0.29x vs JS ALU."
   },
   "notes": [
     "importheavy = package kernels[id].precise wasmBase64 + full env imports (exp/erf/tanh/...), exactly like showcase.html: every env.* call is a WASM→JS host transition, so showcase 1e6 timings measure host round-trips, not WASM compute.",
