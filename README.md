@@ -27,7 +27,7 @@ python make_report.py  # REPORT.md + REPORT.json (statut + changelog)
 <!-- END e2e -->
 
 <!-- BEGIN wasm -->
-freestanding_vs_js_alu=0.3248; importheavy_vs_js_alu=0.07365; importheavy_vs_js_pkg=0.392
+freestanding_vs_js_alu=0.3274; importheavy_vs_js_alu=0.05885; importheavy_vs_js_pkg=0.4098
 <!-- END wasm -->
 
 ## Architecture
