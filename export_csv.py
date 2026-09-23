@@ -1,5 +1,6 @@
 """metrics.csv flattener: eval + e2e + wasm + batch -> 1 table cle,valeur."""
 from __future__ import annotations
+from typing import Any
 
 import csv
 import json
@@ -11,7 +12,7 @@ HERE = Path(__file__).resolve().parent
 def rows():
     out = []
 
-    def add(section, key, val):
+    def add(section: Any, key: Any, val: Any):
         if val is not None:
             out.append({"section": section, "key": key, "value": val})
 

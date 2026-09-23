@@ -1,4 +1,5 @@
 # make_report.py — aggregate existing JSON reports + run tests into REPORT.md/REPORT.json (stdlib only).
+from typing import Any
 import json, os, subprocess, sys
 
 D = os.path.dirname(os.path.abspath(__file__))
@@ -23,7 +24,7 @@ TESTS = [
 ]
 
 
-def load(name):
+def load(name: Any):
     p = N(name)
     if not os.path.exists(p):
         return None
@@ -34,7 +35,7 @@ def load(name):
         return None
 
 
-def fmt(v):
+def fmt(v: Any):
     if v is None:
         return "-"
     if isinstance(v, float):
@@ -42,12 +43,12 @@ def fmt(v):
     return str(v)
 
 
-def useful(lines, idx):
+def useful(lines: Any, idx: Any):
     ls = [l for l in lines if l.strip()]
     return ls[idx] if ls else ""
 
 
-def run(cmd):
+def run(cmd: Any):
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT, cwd=D)
         ls = ((r.stdout or "") + "\n" + (r.stderr or "")).splitlines()
@@ -56,7 +57,7 @@ def run(cmd):
         return {"exit": None, "first": type(e).__name__, "last": str(e)[:120]}
 
 
-def table(headers, rows):
+def table(headers: Any, rows: Any):
     out = "| " + " | ".join(headers) + " |\n"
     out += "|" + "---|" * len(headers) + "\n"
     for r in rows:
@@ -64,7 +65,7 @@ def table(headers, rows):
     return out
 
 
-def snapshot(status, tests, e2e, wasm, batch=None):
+def snapshot(status: Any, tests: Any, e2e: Any, wasm: Any, batch=None):
     ev = (e2e or {}).get("verdict", {})
     wv = (wasm or {}).get("verdict", {})
     bv = (batch or {}).get("verdict", {})

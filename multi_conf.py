@@ -14,6 +14,7 @@ Ablation on hold-out (no eval_harness in repo -> homemade split, seed=0):
     scalar |p-0.5|  vs  current Phi(4|p-0.5|-1)  vs  conf_multi_source
 """
 from __future__ import annotations
+from typing import Any
 
 import numpy as np
 
@@ -84,7 +85,7 @@ def make_dataset(n=800, seed=0):
     return [texts[i] for i in idx], np.asarray(y, np.float32)[idx]
 
 
-def _pair_agreement(votes):
+def _pair_agreement(votes: Any):
     """1 - mean pairwise concurrence disagreement of the sub-model votes."""
     v = np.atleast_2d(np.asarray(votes, float))
     v = np.clip(v, 0.0, 1.0)
@@ -96,7 +97,7 @@ def _pair_agreement(votes):
     return float(out[0]) if np.ndim(votes) == 1 else out
 
 
-def _fit_lr(X, y, epochs=400, lr=0.5, l2=1e-3):
+def _fit_lr(X: Any, y: Any, epochs=400, lr=0.5, l2=1e-3):
     n, d = X.shape
     w, b = np.zeros(d), 0.0
     for _ in range(epochs):
@@ -107,7 +108,7 @@ def _fit_lr(X, y, epochs=400, lr=0.5, l2=1e-3):
     return w, b
 
 
-def _nll(c, y):
+def _nll(c: Any, y: Any):
     c = np.clip(np.asarray(c, float), 1e-4, 1.0 - 1e-4)
     y = np.asarray(y, float)
     return float(-(y * np.log(c) + (1.0 - y) * np.log(1.0 - c)).mean())
@@ -117,7 +118,7 @@ KS = (0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0, 8.0)
 BS = (0.0, 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0)
 
 
-def _calibrate(S, corr):
+def _calibrate(S: Any, corr: Any):
     """Grid over simplex w / k / b minimizing NLL of P(correct) on calib slice."""
     corr = np.asarray(corr, float)
     best = (np.inf, (1.0, 0.0, 0.0, 1.0, 1.0))
@@ -177,11 +178,11 @@ class MultiConfModel:
         self.k, self.b = k, b
         self.calib_nll["multi"] = n
 
-    def _lr_p(self, Xb):
+    def _lr_p(self, Xb: Any):
         return sigmoid_alu(((np.asarray(Xb, float) - self.base_mu) / self.base_sd)
                            @ self.base_w + self.base_b)
 
-    def signals_batch(self, X):
+    def signals_batch(self: Any, X: Any):
         X = np.atleast_2d(np.asarray(X, np.float32))
         P = self.policy.predict_proba(self.emb.transform(X))[:, 0]
         s1 = 2.0 * np.abs(P - 0.5)
@@ -193,10 +194,10 @@ class MultiConfModel:
         s3 = 2.0 * np.abs(self._lr_p(X[:, list(BASE_COLS)]) - 0.5)
         return np.stack([s1, s2, s3], axis=1), P
 
-    def signals(self, text):
+    def signals(self: Any, text: Any):
         return self.signals_batch(features_from_text(text))[0][0]
 
-    def conf(self, s):
+    def conf(self: Any, s: Any):
         return float(sigmoid_alu(self.k * (float(np.asarray(s, float) @ self.w)) - self.b))
 
 
@@ -227,24 +228,24 @@ def conf_current(text: str) -> float:
 
 # ---------- ablation metrics ----------
 
-def _topk(conf, k):
+def _topk(conf: Any, k: Any):
     return np.argsort(-np.asarray(conf), kind="mergesort")[:k]
 
 
-def risk_at_coverage(conf, correct, cov):
+def risk_at_coverage(conf: Any, correct: Any, cov: Any):
     k = max(1, int(round(cov * len(correct))))
     idx = _topk(conf, k)
     return 1.0 - float(np.mean(correct[idx])), int(np.sum(1 - correct[idx])), k
 
 
-def coverage_at_budget(conf, correct, budget):
+def coverage_at_budget(conf: Any, correct: Any, budget: Any):
     order = np.argsort(-np.asarray(conf), kind="mergesort")
     errs = np.cumsum(1.0 - np.asarray(correct, float)[order])
     ok = np.nonzero(errs <= budget + 1e-9)[0]
     return float((ok[-1] + 1) / len(correct)) if len(ok) else 0.0
 
 
-def ece(conf, correct, bins=10):
+def ece(conf: Any, correct: Any, bins=10):
     conf = np.asarray(conf, float)
     correct = np.asarray(correct, float)
     edges = np.linspace(0.0, 1.0, bins + 1)

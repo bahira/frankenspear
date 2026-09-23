@@ -158,7 +158,7 @@ def build_corpus():
     return texts, np.array(y, np.int64)
 
 
-def stratified_split(y, frac=TEST_FRAC, seed=SEED):
+def stratified_split(y: Any, frac=TEST_FRAC, seed=SEED):
     rng = np.random.RandomState(seed)
     tr, te = [], []
     for c in (0, 1):
@@ -170,13 +170,13 @@ def stratified_split(y, frac=TEST_FRAC, seed=SEED):
     return np.array(sorted(tr)), np.array(sorted(te))
 
 
-def gate_scores(emb, policy, X):
+def gate_scores(emb: Any, policy: Any, X: Any):
     p = policy.predict_proba(emb.transform(X))[:, 0]
     conf = gaussian_cdf_fast(4.0 * np.abs(p - 0.5) - 1.0)
     return p, conf
 
 
-def metrics_from_pred(y, pred_instant):
+def metrics_from_pred(y: Any, pred_instant: Any):
     y = np.asarray(y)
     pred = np.asarray(pred_instant, bool)
     instant_ok = y == 0
@@ -200,11 +200,11 @@ def metrics_from_pred(y, pred_instant):
     }
 
 
-def metrics(y, conf, thr):
+def metrics(y: Any, conf: Any, thr: Any):
     return metrics_from_pred(y, np.asarray(conf) >= thr)
 
 
-def sweep(y, conf, thrs=None):
+def sweep(y: Any, conf: Any, thrs=None):
     thrs = thrs if thrs is not None else np.arange(0.4, 0.95, 0.05)
     keys = ("precision", "recall", "f1", "false_instant_rate", "instant_rate")
     return [
@@ -213,7 +213,7 @@ def sweep(y, conf, thrs=None):
     ]
 
 
-def best_thresholds(rows):
+def best_thresholds(rows: Any):
     best_f1 = max(rows, key=lambda r: r["f1"])
     safe = [r for r in rows if r["false_instant_rate"] <= 0.05 and r["instant_rate"] > 0]
     best_safe = max(safe, key=lambda r: r["instant_rate"]) if safe else None
@@ -225,7 +225,7 @@ def best_thresholds(rows):
     }
 
 
-def calibration(y, p, conf, nb=10):
+def calibration(y: Any, p: Any, conf: Any, nb=10):
     acc = ((p >= 0.5).astype(int) == y).astype(float)
     order = np.argsort(conf)
     bins, ece = [], 0.0
@@ -239,7 +239,7 @@ def calibration(y, p, conf, nb=10):
     return {"bins": bins, "ece": round(float(ece), 4)}
 
 
-def ece_score(p, y, nb=10):
+def ece_score(p: Any, y: Any, nb=10):
     """Expected calibration error: bins of max(p,1-p) vs binary accuracy."""
     p = np.asarray(p, np.float64)
     conf = np.maximum(p, 1.0 - p)
@@ -252,7 +252,7 @@ def ece_score(p, y, nb=10):
     return float(ece)
 
 
-def fit_lr(X, y, epochs=400, lr=0.5, seed=0):
+def fit_lr(X: Any, y: Any, epochs=400, lr=0.5, seed=0):
     rng = np.random.RandomState(seed)
     w = np.zeros(X.shape[1])
     b = 0.0

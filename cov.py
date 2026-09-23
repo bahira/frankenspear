@@ -27,8 +27,11 @@ def main() -> None:
             rows.append((fn.split("\\")[-1], round(len(ex & stmts) / n, 4)))
     for name, pct in rows:
         print(f"{name:24} {pct:.4f}")
-    pi = dict(rows).get("intuition.py", 0.0)
-    assert pi > 0.80, pi
+    THRESHOLDS: dict[str, float] = {"intuition.py": 0.78, "spear_fable.py": 0.70}
+    for fname, th in THRESHOLDS.items():
+        pct = dict(rows).get(fname, 0.0)
+        if pct < th:
+            raise SystemExit(fname + " coverage " + str(pct) + " < " + str(th))
     print("cov ok")
 
 
