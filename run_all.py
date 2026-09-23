@@ -27,6 +27,7 @@ CMDS = [
     ["python", "demo_agent.py"],
     ["python", "make_report.py"],
     ["python", "readme_sync.py"],
+    ["python", "jev_bench.py"],
 ]
 
 fails = 0

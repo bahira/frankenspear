@@ -224,6 +224,9 @@ def _features_uncached(text: str) -> np.ndarray[Any, Any]:
         (1.0 if any(k in t for k in QUESTION_WORDS) else 0.0) + t.count("!") / 5,
         (1.0 if any(k in t for k in TECH_WORDS) else 0.0) + t.count("...") / 3,
         len(t.split("\n")) / 20,
+        abs(t.count("(") - t.count(")")) / 5.0,
+        min(t.count(","), 10.0) / 10.0,
+        float(max((len(s.split(")")) - s.count(")") + 1) for s in [t])) / 5.0,
     ], dtype=np.float32)
 
 

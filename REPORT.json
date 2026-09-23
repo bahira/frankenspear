@@ -1,19 +1,19 @@
 {
- "generated_at": "2026-09-23T04:59:29",
+ "generated_at": "2026-09-23T07:17:25",
  "status": "GREEN",
  "sources_read": 4,
  "gate": {
   "gate_retrained@0.65": {
-   "f1": 0.6061,
-   "precision": 0.4545,
+   "f1": 0.6154,
+   "precision": 0.4651,
    "recall": 0.9091,
-   "false_instant_rate": 0.5455
+   "false_instant_rate": 0.5349
   },
   "gate_toy@0.65": {
-   "f1": 0.069,
-   "precision": 0.1429,
-   "recall": 0.0455,
-   "false_instant_rate": 0.8571
+   "f1": 0.3871,
+   "precision": 0.6667,
+   "recall": 0.2727,
+   "false_instant_rate": 0.3333
   },
   "logistic_regression": {
    "f1": 0.8444,
@@ -33,12 +33,12 @@
    "always_full": {
     "n": 109,
     "full_rate": 1.0,
-    "token_cost_proxy": 179397,
+    "token_cost_proxy": 180213,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 1.0,
-    "p50_us": 5429.7,
-    "p99_us": 11295.91,
-    "mean_us": 6060.48
+    "p50_us": 3075.3,
+    "p99_us": 6864.46,
+    "mean_us": 3581.63
    },
    "always_fast": {
     "n": 109,
@@ -46,57 +46,57 @@
     "token_cost_proxy": 0,
     "false_instant_rate": 1.0,
     "instant_miss_rate": 0.0,
-    "p50_us": 38.6,
-    "p99_us": 86.67,
-    "mean_us": 38.43
+    "p50_us": 32.2,
+    "p99_us": 84.31,
+    "mean_us": 31.59
    },
    "gated": {
     "n": 109,
-    "full_rate": 0.4587,
-    "token_cost_proxy": 80333,
-    "false_instant_rate": 1.0,
-    "instant_miss_rate": 0.8475,
-    "p50_us": 985.6,
-    "p99_us": 9557.3,
-    "mean_us": 2901.89
+    "full_rate": 0.9083,
+    "token_cost_proxy": 164225,
+    "false_instant_rate": 0.0,
+    "instant_miss_rate": 0.8305,
+    "p50_us": 3518.4,
+    "p99_us": 7080.57,
+    "mean_us": 3714.51
    },
    "gated_lr": {
     "n": 109,
     "full_rate": 0.6606,
-    "token_cost_proxy": 119964,
+    "token_cost_proxy": 120653,
     "false_instant_rate": 0.0,
     "instant_miss_rate": 0.3729,
-    "p50_us": 3748.1,
-    "p99_us": 9927.64,
-    "mean_us": 3841.61
+    "p50_us": 3140.4,
+    "p99_us": 6161.03,
+    "mean_us": 2748.96
    }
   },
   "verdict": {
-   "gate_saves_latency": true,
+   "gate_saves_latency": false,
    "gate_saves_tokens": true,
-   "latency_savings_pct": 81.8,
-   "token_savings_pct": 55.2,
-   "false_instant_rate_gated": 1.0,
+   "latency_savings_pct": -2.1,
+   "token_savings_pct": 33.0,
+   "false_instant_rate_gated": 0.0,
    "false_instant_rate_gated_lr": 0.0,
    "false_instant_rate_always_fast": 1.0,
    "quality_ok": true,
-   "summary": "gate: 81.8% latency / 55.2% tokens vs always_full; false-instant conf=1.0 lr=0.0 vs always_fast=1.0"
+   "summary": "gate: -2.1% latency / 33.0% tokens vs always_full; false-instant conf=0.0 lr=0.0 vs always_fast=1.0"
   }
  },
  "wasm": {
   "medians": {
-   "importheavy_vs_js_pkg": 0.40981933316476926,
-   "importheavy_vs_js_alu": 0.058846388239255504,
-   "freestanding_vs_js_alu": 0.3273906230834704
+   "importheavy_vs_js_pkg": 0.36288848162214593,
+   "importheavy_vs_js_alu": 0.07188250026168896,
+   "freestanding_vs_js_alu": 0.3401275992746408
   },
-  "statement": "import-heavy package WASM is 2.44x SLOWER than its own JS (median 0.41x) — env host-import overhead dominates; 0-import freestanding WASM is 0.33x vs JS ALU."
+  "statement": "import-heavy package WASM is 2.76x SLOWER than its own JS (median 0.36x) — env host-import overhead dominates; 0-import freestanding WASM is 0.34x vs JS ALU."
  },
  "wasm_batch": {
   "median_speedup_per_n": {
-   "256": 0.7058823529411765,
-   "4096": 2.808080808080808,
-   "65536": 1.1666666666666667,
-   "1000000": 1.0181702860684865
+   "256": 0.76,
+   "4096": 1.3263888888888888,
+   "65536": 1.0123561994034938,
+   "1000000": 1.114463927959188
   },
   "crossover_n": 4096,
   "advantageous": true,
@@ -180,150 +180,10 @@
   }
  ],
  "next": [
-  "Gate par defaut = logistic_regression (F1=0.8444) > retrained (F1=0.6061); faux-instant 0.1739 vs 0.5455",
+  "Gate par defaut = logistic_regression (F1=0.8444) > retrained (F1=0.6154); faux-instant 0.1739 vs 0.5349",
   "WASM batch: preferrer batch (N>=4096) — scalar ~0.3x, batch ~1-2x vs JS"
  ],
  "changelog": [
-  {
-   "generated_at": "2026-09-23T00:59:02",
-   "delta": "tests_ok: 14->11; latency_savings_pct: 73.1->-; token_savings_pct: 55.2->-; wasm_median_js_pkg: 0.359->0.4836; wasm_median_js_alu: 0.06152->0.07279; wasm_median_freestanding: 0.2595->0.2466",
-   "status": "RED",
-   "tests_ok": 11,
-   "tests_total": 15,
-   "latency_savings_pct": null,
-   "token_savings_pct": null,
-   "wasm_median_js_pkg": 0.48356517303317503,
-   "wasm_median_js_alu": 0.0727943981498752,
-   "wasm_median_freestanding": 0.2465535712664058,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:00:53",
-   "delta": "tests_ok: 11->12; latency_savings_pct: -->86.6; token_savings_pct: -->55.2; wasm_median_js_pkg: 0.4836->0.3483; wasm_median_js_alu: 0.07279->0.08464; wasm_median_freestanding: 0.2466->0.287",
-   "status": "RED",
-   "tests_ok": 12,
-   "tests_total": 15,
-   "latency_savings_pct": 86.6,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.34832041498835886,
-   "wasm_median_js_alu": 0.08463825154771244,
-   "wasm_median_freestanding": 0.2869635598171226,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:04:18",
-   "delta": "tests_ok: 12->13; latency_savings_pct: 86.6->92.7; wasm_median_js_pkg: 0.3483->0.4176; wasm_median_js_alu: 0.08464->0.07536; wasm_median_freestanding: 0.287->0.2468",
-   "status": "RED",
-   "tests_ok": 13,
-   "tests_total": 15,
-   "latency_savings_pct": 92.7,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.4175965552506974,
-   "wasm_median_js_alu": 0.07535987246982823,
-   "wasm_median_freestanding": 0.2468233441641962,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:04:39",
-   "delta": "wasm_median_js_pkg: 0.4176->0.3832; wasm_median_js_alu: 0.07536->0.07715; wasm_median_freestanding: 0.2468->0.4241",
-   "status": "RED",
-   "tests_ok": 13,
-   "tests_total": 15,
-   "latency_savings_pct": 92.7,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.38320508929847996,
-   "wasm_median_js_alu": 0.07714666515082838,
-   "wasm_median_freestanding": 0.4241319527423894,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:13:10",
-   "delta": "tests_ok: 13->14; latency_savings_pct: 92.7->86; wasm_median_js_pkg: 0.3832->0.4279; wasm_median_js_alu: 0.07715->0.04988; wasm_median_freestanding: 0.4241->0.2877; wasm_batch_crossover_n: 4096->65536",
-   "status": "RED",
-   "tests_ok": 14,
-   "tests_total": 15,
-   "latency_savings_pct": 86.0,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.42789418679154656,
-   "wasm_median_js_alu": 0.04987558964033926,
-   "wasm_median_freestanding": 0.2877056189568639,
-   "wasm_batch_crossover_n": 65536,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:15:01",
-   "delta": "status: RED->GREEN; tests_ok: 14->15; latency_savings_pct: 86->91.8; wasm_median_js_pkg: 0.4279->0.4476; wasm_median_js_alu: 0.04988->0.1067; wasm_median_freestanding: 0.2877->0.3347; wasm_batch_crossover_n: 65536->4096",
-   "status": "GREEN",
-   "tests_ok": 15,
-   "tests_total": 15,
-   "latency_savings_pct": 91.8,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.4476290692674285,
-   "wasm_median_js_alu": 0.1067341403509483,
-   "wasm_median_freestanding": 0.33469571788428676,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:17:29",
-   "delta": "latency_savings_pct: 91.8->55.6; wasm_median_js_pkg: 0.4476->0.3952; wasm_median_js_alu: 0.1067->0.06893; wasm_median_freestanding: 0.3347->0.2461",
-   "status": "GREEN",
-   "tests_ok": 15,
-   "tests_total": 15,
-   "latency_savings_pct": 55.6,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.39524676342023096,
-   "wasm_median_js_alu": 0.06893081151661343,
-   "wasm_median_freestanding": 0.24606199293901804,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:23:07",
-   "delta": "status: GREEN->RED; tests_ok: 15->12; latency_savings_pct: 55.6->49.3; wasm_median_js_pkg: 0.3952->0.5257; wasm_median_js_alu: 0.06893->0.09304; wasm_median_freestanding: 0.2461->0.2818",
-   "status": "RED",
-   "tests_ok": 12,
-   "tests_total": 15,
-   "latency_savings_pct": 49.3,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.5256544374662879,
-   "wasm_median_js_alu": 0.09304172635679228,
-   "wasm_median_freestanding": 0.28178107108515127,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:31:54",
-   "delta": "status: RED->GREEN; tests_ok: 12->15; latency_savings_pct: 49.3->88.7; wasm_median_js_pkg: 0.5257->0.3581; wasm_median_js_alu: 0.09304->0.08839; wasm_median_freestanding: 0.2818->0.3029",
-   "status": "GREEN",
-   "tests_ok": 15,
-   "tests_total": 15,
-   "latency_savings_pct": 88.7,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.35811896410262145,
-   "wasm_median_js_alu": 0.08838798104940224,
-   "wasm_median_freestanding": 0.3028868850055382,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
-  {
-   "generated_at": "2026-09-23T01:48:32",
-   "delta": "latency_savings_pct: 88.7->81.6; wasm_median_js_pkg: 0.3581->0.399; wasm_median_js_alu: 0.08839->0.08836; wasm_median_freestanding: 0.3029->0.3512",
-   "status": "GREEN",
-   "tests_ok": 15,
-   "tests_total": 15,
-   "latency_savings_pct": 81.6,
-   "token_savings_pct": 55.2,
-   "wasm_median_js_pkg": 0.3989775887840845,
-   "wasm_median_js_alu": 0.0883631791243116,
-   "wasm_median_freestanding": 0.35116173552299546,
-   "wasm_batch_crossover_n": 4096,
-   "wasm_batch_advantageous": true
-  },
   {
    "generated_at": "2026-09-23T02:15:01",
    "delta": "latency_savings_pct: 81.6->79.8; wasm_median_js_pkg: 0.399->0.3416; wasm_median_js_alu: 0.08836->0.07861; wasm_median_freestanding: 0.3512->0.3537",
@@ -461,6 +321,146 @@
    "wasm_median_js_pkg": 0.40981933316476926,
    "wasm_median_js_alu": 0.058846388239255504,
    "wasm_median_freestanding": 0.3273906230834704,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T05:49:21",
+   "delta": "latency_savings_pct: 81.8->73.1; wasm_median_js_pkg: 0.4098->0.376; wasm_median_js_alu: 0.05885->0.07394; wasm_median_freestanding: 0.3274->0.2097",
+   "status": "GREEN",
+   "tests_ok": 15,
+   "tests_total": 15,
+   "latency_savings_pct": 73.1,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.37604208869793826,
+   "wasm_median_js_alu": 0.07394093716059787,
+   "wasm_median_freestanding": 0.2097030283476637,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T06:00:10",
+   "delta": "latency_savings_pct: 73.1->70.2; wasm_median_js_pkg: 0.376->0.4293; wasm_median_js_alu: 0.07394->0.04938; wasm_median_freestanding: 0.2097->0.2136",
+   "status": "GREEN",
+   "tests_ok": 15,
+   "tests_total": 15,
+   "latency_savings_pct": 70.2,
+   "token_savings_pct": 55.2,
+   "wasm_median_js_pkg": 0.42930307653050437,
+   "wasm_median_js_alu": 0.0493756274169596,
+   "wasm_median_freestanding": 0.21357199586805053,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T06:13:22",
+   "delta": "status: GREEN->RED; tests_ok: 15->12; latency_savings_pct: 70.2->5; token_savings_pct: 55.2->8.9; wasm_median_js_pkg: 0.4293->0.31; wasm_median_js_alu: 0.04938->0.04834; wasm_median_freestanding: 0.2136->0.2176",
+   "status": "RED",
+   "tests_ok": 12,
+   "tests_total": 15,
+   "latency_savings_pct": 5.0,
+   "token_savings_pct": 8.9,
+   "wasm_median_js_pkg": 0.3099546603209802,
+   "wasm_median_js_alu": 0.048344078888109446,
+   "wasm_median_freestanding": 0.21761953818428884,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T06:43:14",
+   "delta": "latency_savings_pct: 5->-12.6; wasm_median_js_pkg: 0.31->0.363; wasm_median_js_alu: 0.04834->0.0551; wasm_median_freestanding: 0.2176->0.2504",
+   "status": "RED",
+   "tests_ok": 12,
+   "tests_total": 15,
+   "latency_savings_pct": -12.6,
+   "token_savings_pct": 8.9,
+   "wasm_median_js_pkg": 0.3629696808793884,
+   "wasm_median_js_alu": 0.055099330931337266,
+   "wasm_median_freestanding": 0.250414033648642,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T06:48:20",
+   "delta": "latency_savings_pct: -12.6->-3.8; wasm_median_js_pkg: 0.363->0.377; wasm_median_js_alu: 0.0551->0.07295; wasm_median_freestanding: 0.2504->0.3224",
+   "status": "RED",
+   "tests_ok": 12,
+   "tests_total": 15,
+   "latency_savings_pct": -3.8,
+   "token_savings_pct": 8.9,
+   "wasm_median_js_pkg": 0.37704161881925874,
+   "wasm_median_js_alu": 0.07294897081668078,
+   "wasm_median_freestanding": 0.32241140084517017,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T06:55:32",
+   "delta": "latency_savings_pct: -3.8->-92.7; wasm_median_js_pkg: 0.377->0.5706; wasm_median_js_alu: 0.07295->0.1048; wasm_median_freestanding: 0.3224->0.2394",
+   "status": "RED",
+   "tests_ok": 12,
+   "tests_total": 15,
+   "latency_savings_pct": -92.7,
+   "token_savings_pct": 8.9,
+   "wasm_median_js_pkg": 0.570617118453284,
+   "wasm_median_js_alu": 0.10481726862065877,
+   "wasm_median_freestanding": 0.2394442717281888,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T07:03:20",
+   "delta": "tests_ok: 12->13; latency_savings_pct: -92.7->24.5; token_savings_pct: 8.9->33; wasm_median_js_pkg: 0.5706->0.3423; wasm_median_js_alu: 0.1048->0.04464; wasm_median_freestanding: 0.2394->0.2313",
+   "status": "RED",
+   "tests_ok": 13,
+   "tests_total": 15,
+   "latency_savings_pct": 24.5,
+   "token_savings_pct": 33.0,
+   "wasm_median_js_pkg": 0.3423317754299196,
+   "wasm_median_js_alu": 0.04463932823185232,
+   "wasm_median_freestanding": 0.2312712542533023,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T07:08:31",
+   "delta": "latency_savings_pct: 24.5->12.7; wasm_median_js_pkg: 0.3423->0.365; wasm_median_js_alu: 0.04464->0.08052; wasm_median_freestanding: 0.2313->0.3485",
+   "status": "RED",
+   "tests_ok": 13,
+   "tests_total": 15,
+   "latency_savings_pct": 12.7,
+   "token_savings_pct": 33.0,
+   "wasm_median_js_pkg": 0.36501364136376174,
+   "wasm_median_js_alu": 0.08051805842648638,
+   "wasm_median_freestanding": 0.3485490910601877,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T07:12:40",
+   "delta": "latency_savings_pct: 12.7->8.6; wasm_median_js_pkg: 0.365->0.3385; wasm_median_js_alu: 0.08052->0.07681; wasm_median_freestanding: 0.3485->0.3574",
+   "status": "RED",
+   "tests_ok": 13,
+   "tests_total": 15,
+   "latency_savings_pct": 8.6,
+   "token_savings_pct": 33.0,
+   "wasm_median_js_pkg": 0.33847278670216663,
+   "wasm_median_js_alu": 0.07681373939838303,
+   "wasm_median_freestanding": 0.35742041564861765,
+   "wasm_batch_crossover_n": 4096,
+   "wasm_batch_advantageous": true
+  },
+  {
+   "generated_at": "2026-09-23T07:17:25",
+   "delta": "status: RED->GREEN; tests_ok: 13->15; latency_savings_pct: 8.6->-2.1; wasm_median_js_pkg: 0.3385->0.3629; wasm_median_js_alu: 0.07681->0.07188; wasm_median_freestanding: 0.3574->0.3401",
+   "status": "GREEN",
+   "tests_ok": 15,
+   "tests_total": 15,
+   "latency_savings_pct": -2.1,
+   "token_savings_pct": 33.0,
+   "wasm_median_js_pkg": 0.36288848162214593,
+   "wasm_median_js_alu": 0.07188250026168896,
+   "wasm_median_freestanding": 0.3401275992746408,
    "wasm_batch_crossover_n": 4096,
    "wasm_batch_advantageous": true
   }

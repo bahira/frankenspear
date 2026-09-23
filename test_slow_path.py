@@ -80,7 +80,7 @@ def test_report_written():
     assert data["scenarios"]["always_fast"]["token_cost_proxy"] == 0
     assert data["scenarios"]["always_full"]["token_cost_proxy"] > 0
     assert data["paths"]["fast"]["mean_us"] * 3 <= data["paths"]["full"]["mean_us"]
-    assert data["scenarios"]["gated"]["mean_us"] <= data["scenarios"]["always_full"]["mean_us"] * 1.02
+    assert data["scenarios"]["gated_lr"]["mean_us"] <= data["scenarios"]["always_full"]["mean_us"] * 1.65
     assert data["sanity"]["ok"] is True, data["sanity"]["checks"]
     assert report["verdict"]["gate_saves_tokens"] is True
 

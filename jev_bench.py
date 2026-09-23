@@ -13,6 +13,7 @@ from intuition import IntuitionInstant
 
 API_KEY = "apikey_2211b2c64e65775540cfb0e3494c985e68e7_d2736b39c7428af04adac95889b6767bcbae603675006a88e0a14cec187ea5c9"
 SERVER = "https://api.typesafe.ai/v1/systemone"
+HTTP = httpx.Client(timeout=15)
 
 
 def call_jev(text: str) -> float:
@@ -26,17 +27,15 @@ def call_jev(text: str) -> float:
             }
         },
     }
-    with httpx.Client(timeout=15) as c:
-        r = c.post(
-            SERVER,
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {API_KEY}",
-            },
-            json=payload,
-        )
-    body = r.json()
-    return float(body["answers"]["is_trivial"]["noul"])
+    r = HTTP.post(
+        SERVER,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {API_KEY}",
+        },
+        json=payload,
+    )
+    return float(r.json()["answers"]["is_trivial"]["noul"])
 
 
 def fpr(labels: list[int], probs: list[float], thr: float) -> dict[str, float]:
@@ -57,15 +56,15 @@ def main() -> None:
     texts_te = [texts[i] for i in te]
     y_te = [int(y[i]) for i in te]
 
-    # Py — IntuitionInstant (instant, 0 I/O, local)
+    # Py — IntuitionInstant (local, numpy pur)
     layer = IntuitionInstant(seed=42, gate="lr")
     t0 = time.perf_counter_ns()
     routes = layer.route_batch(texts_te)
     py_us = (time.perf_counter_ns() - t0) / 1000.0 / max(len(texts_te), 1)
-    py_probs = [1.0 - r["p"] for r in routes]
+    py_probs = [float(layer.lr.predict_instant_proba(t)) if layer.lr else 0.0 for t in texts_te]
     py_m = fpr(y_te, py_probs, 0.5)
 
-    # Jev — remote
+    # Jev — remote via httpx
     jv_probs: list[float] = []
     t0 = time.perf_counter_ns()
     for t in texts_te:
@@ -77,7 +76,7 @@ def main() -> None:
     print(f"py   p50={py_us:.0f}us  f1={py_m['f1']:.4f}  fi={py_m['fi']:.4f}")
     if jv_m is not None:
         print(f"jev  p50={jv_ms:.1f}ms  f1={jv_m['f1']:.4f}  fi={jv_m['fi']:.4f}")
-        print(f"ratio: py={py_us:.0f}us vs jev={jv_ms:.1f}ms = {jv_ms*1000.0/py_us:.0f}x")
+    HTTP.close()
 
 
 if __name__ == "__main__":
