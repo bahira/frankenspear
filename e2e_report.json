@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T17:35:11+00:00",
+  "generated_at": "2026-09-23T17:53:09+00:00",
   "n_prompts": 109,
   "n_instant_ok": 59,
   "n_full_only": 50,
@@ -12,9 +12,9 @@
       "token_cost_proxy": 179649,
       "false_instant_rate": 0.0,
       "instant_miss_rate": 1.0,
-      "p50_us": 5190.0,
-      "p99_us": 10636.46,
-      "mean_us": 5561.01
+      "p50_us": 8496.0,
+      "p99_us": 15586.23,
+      "mean_us": 8426.11
     },
     "always_fast": {
       "n": 109,
@@ -22,9 +22,9 @@
       "token_cost_proxy": 0,
       "false_instant_rate": 1.0,
       "instant_miss_rate": 0.0,
-      "p50_us": 43.2,
-      "p99_us": 95.54,
-      "mean_us": 43.54
+      "p50_us": 56.7,
+      "p99_us": 683.01,
+      "mean_us": 105.07
     },
     "gated": {
       "n": 109,
@@ -32,9 +32,9 @@
       "token_cost_proxy": 124906,
       "false_instant_rate": 0.0,
       "instant_miss_rate": 0.4237,
-      "p50_us": 4575.9,
-      "p99_us": 13036.72,
-      "mean_us": 4732.74
+      "p50_us": 4147.7,
+      "p99_us": 11531.55,
+      "mean_us": 4890.97
     },
     "gated_lr": {
       "n": 109,
@@ -42,21 +42,21 @@
       "token_cost_proxy": 120224,
       "false_instant_rate": 0.0,
       "instant_miss_rate": 0.3729,
-      "p50_us": 4608.9,
-      "p99_us": 11178.04,
-      "mean_us": 4553.59
+      "p50_us": 4115.9,
+      "p99_us": 11485.77,
+      "mean_us": 4687.75
     }
   },
   "paths": {
     "fast": {
-      "p50_us": 86.05,
-      "p99_us": 375.98,
-      "mean_us": 98.04
+      "p50_us": 59.75,
+      "p99_us": 549.57,
+      "mean_us": 100.22
     },
     "full": {
-      "p50_us": 5868.5,
-      "p99_us": 10366.74,
-      "mean_us": 5925.73
+      "p50_us": 4862.35,
+      "p99_us": 12422.69,
+      "mean_us": 6149.4
     },
     "n": 250
   },
@@ -88,12 +88,12 @@
   "verdict": {
     "gate_saves_latency": true,
     "gate_saves_tokens": true,
-    "latency_savings_pct": 11.2,
+    "latency_savings_pct": 51.6,
     "token_savings_pct": 33.1,
     "false_instant_rate_gated": 0.0,
     "false_instant_rate_gated_lr": 0.0,
     "false_instant_rate_always_fast": 1.0,
     "quality_ok": true,
-    "summary": "gate: 11.2% latency / 33.1% tokens vs always_full; false-instant conf=0.0 lr=0.0 vs always_fast=1.0"
+    "summary": "gate: 51.6% latency / 33.1% tokens vs always_full; false-instant conf=0.0 lr=0.0 vs always_fast=1.0"
   }
 }
