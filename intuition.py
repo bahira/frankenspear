@@ -227,6 +227,9 @@ def _features_uncached(text: str) -> np.ndarray[Any, Any]:
         abs(t.count("(") - t.count(")")) / 5.0,
         min(t.count(","), 10.0) / 10.0,
         float(max((len(s.split(")")) - s.count(")") + 1) for s in [t])) / 5.0,
+        len(set(t.split())) / max(len(t.split()), 1) / 5.0,
+        sum(1 for w in t.split() if len(w) > 1 and w[0].isupper() and w[1:].islower()) / max(len(t.split()), 1),
+        t.count("```") + t.count("def ") + t.count("class") / 4.0,
     ], dtype=np.float32)
 
 

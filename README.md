@@ -23,11 +23,11 @@ python make_report.py  # REPORT.md + REPORT.json (statut + changelog)
 <!-- END gate -->
 
 <!-- BEGIN e2e -->
-('-2.1', '33', '-')
+('11.2', '33.1', '-')
 <!-- END e2e -->
 
 <!-- BEGIN wasm -->
-freestanding_vs_js_alu=0.3401; importheavy_vs_js_alu=0.07188; importheavy_vs_js_pkg=0.3629
+freestanding_vs_js_alu=0.2193; importheavy_vs_js_alu=0.07045; importheavy_vs_js_pkg=0.3779
 <!-- END wasm -->
 
 ## Architecture

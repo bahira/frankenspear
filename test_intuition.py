@@ -56,7 +56,7 @@ def test_gate_lr_beats_conf():
         return ok / len(rows)
     assert acc(lr) >= acc(cf)
     feats = features_from_text("salut")
-    assert feats.shape == (19,) and feats.dtype == np.float32
+    assert feats.shape == (22,) and feats.dtype == np.float32
     for name, x in (("tanh", 1.0), ("gelu_erf", 1.0), ("gauss_cdf", 0.5)):
         out = cf.call_champion(name, x)
         assert np.isfinite(out)

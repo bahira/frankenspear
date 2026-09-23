@@ -16,7 +16,7 @@ def test_fuzz():
         texts.append(" ".join(str(rng.choice(mots)) for _ in range(int(k))))
     for t in texts:
         f = intuition.features_from_text(t)
-        assert len(f) == 19, f"dim {len(f)}"
+        assert len(f) == 22, f"dim {len(f)}"
         r = layer.route(t)
         assert 0 <= r["p"] <= 1 and 0 <= r["conf"] <= 1
     rb = layer.route_batch(texts)
